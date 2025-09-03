@@ -4,131 +4,321 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS part one </title>
+    <title>Wanderlust Travel - Explore the World</title>
     <link rel="stylesheet" href="part_one.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <p>I'm learning a css now</p>
-    <h1> Others can count on me in no time </h1>
-    <br><br>
-    <p id="demo"> Ambition shouldn't be quenched like a fire; it should be ignited.</p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-globe-americas"></i>
+                <span>Wanderlust</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#destinations" class="nav-link">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#packages" class="nav-link">Packages</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
 
-        <button type="button" onclick='document.getElementById("demo").innerHTML ="Hello Javascript!"' >Click me !</button> 
-    
-    
-    <form action="index.html">    
-        <h1>Working on forms</h1>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Your Next Adventure</h1>
+            <p class="hero-subtitle">Explore breathtaking destinations and create unforgettable memories</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Explore Destinations</button>
+                <button class="btn btn-secondary">View Packages</button>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
 
-        <label for="full name">Full Name :</label>
-        <input type="text" id="fullName" value="" placeholder="Full name">
-        <br><br>
+    <!-- Destinations Section -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <h2 class="section-title">Popular Destinations</h2>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="car.png" alt="Canada" class="destination-img">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Canada</h3>
+                        <p class="destination-capital">Capital: Ottawa</p>
+                        <p class="destination-description">Experience the stunning landscapes, vibrant cities, and rich culture of the Great White North.</p>
+                        <div class="destination-features">
+                            <span class="feature"><i class="fas fa-mountain"></i> Nature</span>
+                            <span class="feature"><i class="fas fa-city"></i> Cities</span>
+                            <span class="feature"><i class="fas fa-snowflake"></i> Winter Sports</span>
+                        </div>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                </div>
 
-        <!--this is a comment-->
-        <label for="email" >Email   :</label>
-        <input type="email" value="" placeholder="Enter Email">
-        <br><br>
-        
-     
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="woman.png" alt="Ghana" class="destination-img">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Ghana</h3>
+                        <p class="destination-capital">Capital: Accra</p>
+                        <p class="destination-description">Discover the rich history, beautiful beaches, and warm hospitality of West Africa.</p>
+                        <div class="destination-features">
+                            <span class="feature"><i class="fas fa-umbrella-beach"></i> Beaches</span>
+                            <span class="feature"><i class="fas fa-history"></i> History</span>
+                            <span class="feature"><i class="fas fa-music"></i> Culture</span>
+                        </div>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                </div>
 
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="road.jpg" alt="Kenya" class="destination-img">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Kenya</h3>
+                        <p class="destination-capital">Capital: Nairobi</p>
+                        <p class="destination-description">Embark on an unforgettable safari adventure in the heart of East Africa.</p>
+                        <div class="destination-features">
+                            <span class="feature"><i class="fas fa-lion"></i> Wildlife</span>
+                            <span class="feature"><i class="fas fa-camera"></i> Photography</span>
+                            <span class="feature"><i class="fas fa-tree"></i> Nature</span>
+                        </div>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <label for="password">Password  :</label>
-        <input type="password" value="boys" placeholder="Enter password">
-        <br>
-        <input type="text" value="" placeholder="Enter name">
-        <br><br>
-        
-        <input type="submit" value="Register" >
+    <!-- Packages Section -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <h2 class="section-title">Travel Packages</h2>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3>Adventure Explorer</h3>
+                        <div class="package-price">
+                            <span class="currency">$</span>
+                            <span class="amount">1,299</span>
+                            <span class="period">/person</span>
+                        </div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 7 Days / 6 Nights</li>
+                            <li><i class="fas fa-check"></i> Guided Tours</li>
+                            <li><i class="fas fa-check"></i> Accommodation</li>
+                            <li><i class="fas fa-check"></i> Transportation</li>
+                            <li><i class="fas fa-check"></i> Meals Included</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary">Book Now</button>
+                </div>
 
-        <!--Filling forms radio selections-->
-        <h1>Hotel feed back forms</h1>
-        <p>please answer the following questions</p>
-        <h3>Select your gender ? </h3>
-        <input type="radio" id="male" name="gender">
-        <label for="radio"> Male </label><br>
+                <div class="package-card featured">
+                    <div class="package-badge">Most Popular</div>
+                    <div class="package-header">
+                        <h3>Luxury Getaway</h3>
+                        <div class="package-price">
+                            <span class="currency">$</span>
+                            <span class="amount">2,499</span>
+                            <span class="period">/person</span>
+                        </div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 10 Days / 9 Nights</li>
+                            <li><i class="fas fa-check"></i> 5-Star Hotels</li>
+                            <li><i class="fas fa-check"></i> Private Guide</li>
+                            <li><i class="fas fa-check"></i> Premium Transport</li>
+                            <li><i class="fas fa-check"></i> All-Inclusive</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary">Book Now</button>
+                </div>
 
-        <input type="radio" id="female"  name="gender">
-        <label for="female">Female </label><br>
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3>Budget Traveler</h3>
+                        <div class="package-price">
+                            <span class="currency">$</span>
+                            <span class="amount">799</span>
+                            <span class="period">/person</span>
+                        </div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 5 Days / 4 Nights</li>
+                            <li><i class="fas fa-check"></i> Hostel Stay</li>
+                            <li><i class="fas fa-check"></i> Group Tours</li>
+                            <li><i class="fas fa-check"></i> Public Transport</li>
+                            <li><i class="fas fa-check"></i> Breakfast Only</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <input type="radio" id="others" name="gender">
-        <label for="others"> Others </label><br>
-        <!-- menu selection-->
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About Wanderlust Travel</h2>
+                    <p>We are passionate about creating extraordinary travel experiences that connect people with the world's most amazing destinations. Our team of travel experts works tirelessly to craft perfect itineraries that combine adventure, culture, and relaxation.</p>
+                    <p>With over 10 years of experience in the travel industry, we've helped thousands of travelers discover new horizons and create memories that last a lifetime.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Destinations</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Happy Travelers</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="road.jpg" alt="Travel Adventure" class="about-img">
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <select name="feedback" id="">
-            <option value="1">Excellent</option>
-            <option value="5">Very good</option>
-            <option value="3">Good</option>
-            <option value="1">Fail</option>
-            <option value="2">Very poor</option><br>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Plan Your Next Adventure</h3>
+                    <p>Ready to start your journey? Contact us today and let our travel experts help you create the perfect itinerary.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wanderlust.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Travel Street, Adventure City, AC 12345</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Preferred Destination</label>
+                            <select id="destination" name="destination">
+                                <option value="">Select a destination</option>
+                                <option value="canada">Canada</option>
+                                <option value="ghana">Ghana</option>
+                                <option value="kenya">Kenya</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell us about your travel dreams..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        </select>
-        <br>
-       
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wanderlust Travel</h3>
+                    <p>Your gateway to extraordinary adventures around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Destinations</h4>
+                    <ul>
+                        <li><a href="#">Canada</a></li>
+                        <li><a href="#">Ghana</a></li>
+                        <li><a href="#">Kenya</a></li>
+                        <li><a href="#">More...</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@wanderlust.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Adventure City, AC 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wanderlust Travel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-        <input type="checkbox" id="Nigeria" >
-        <label for="Nigeria"> Nigeria</label><br>
-
-        <input type="checkbox" id="Ghana" >
-        <label for="Ghana">  Ghana</label><br>
-        
-        <input type="checkbox" id="kenya" >
-        <label for="kenya">  kenya</label><br>
-
-        <input type="checkbox" id="Niger" >
-        <label for="Niger"> Niger</label><br>
-
-        <input type="checkbox" id="gambia" >
-        <label for="gambia"> gambia</label><br>
-
-        <!--for text area-->
-        <h3> Any text message for us?</h3>
-        <textarea name="" id="" cols="30" rows="10" placeholder="Enter a message"></textarea><br>
-        <input type="submit" id="" value="send">
-
-        <!--this is a last syntax to learn-->
-        <h4>Latest html 5 syntax</h4>
-        <figure>
-            <img src="womanwhtb.png" alt="A vector of woman ">
-        </figure>
-
-        <details>
-            <summary>What is Algorithm</summary>
-            <p>Algorithm is a step by step process of solving a problems</p>
-        </details>
-        <meter value=""  min="0" max="10"></meter>
-        
-    
-</form>
-
-<h1>My top four countries of choice </h1>
-  <table border="1">
-      <thead>
-         <th>country</th>
-         <th>Flag</th>
-         <th>Capital</th>
-            
-      </thead>
-         <tr>
-            <td>Canada</td>
-            <td><img src="car.png" alt="car" width="100px" height="50"></td>
-            <td>Ottawa</td>
-         </tr >
-         <tr>
-            <td>Ghana</td>
-            <td><img src="woman.png " alt="woman as a vector" width="100px" heigh="100px"></td>
-            <td>Accra</td>
-            </tr>
-          
-   </table>
-   <br>
-   <a href="myfirsthtml.html" target="_parent">Go back to myfirsthtml page</a>
-   <br><br>
-   <a href="https:www.facebook.com">Check on facebook for more details</a>
-
-
-
-
-<p>This is a trial </p>
-
-    
+    <script src="script.js"></script>
 </body>
 </html>

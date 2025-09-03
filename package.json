@@ -1,0 +1,48 @@
+{
+  "name": "wanderlust-travel",
+  "version": "1.0.0",
+  "description": "A modern, responsive travel and tourism website built with HTML5, CSS3, and JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8000 -o",
+    "dev": "http-server -p 8000 -o -c-1",
+    "serve": "python -m http.server 8000",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'"
+  },
+  "keywords": [
+    "travel",
+    "tourism",
+    "website",
+    "responsive",
+    "html5",
+    "css3",
+    "javascript",
+    "modern-web",
+    "frontend",
+    "ui-ux"
+  ],
+  "author": "Wanderlust Travel Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wanderlust-travel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/wanderlust-travel/issues"
+  },
+  "homepage": "https://yourusername.github.io/wanderlust-travel",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
