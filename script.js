@@ -41,6 +41,233 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Search Overlay Functionality
+const searchToggle = document.getElementById('searchToggle');
+const searchOverlay = document.getElementById('searchOverlay');
+const searchClose = document.getElementById('searchClose');
+const searchInput = document.getElementById('searchInput');
+
+searchToggle.addEventListener('click', () => {
+    searchOverlay.classList.add('active');
+    searchInput.focus();
+});
+
+searchClose.addEventListener('click', () => {
+    searchOverlay.classList.remove('active');
+});
+
+searchOverlay.addEventListener('click', (e) => {
+    if (e.target === searchOverlay) {
+        searchOverlay.classList.remove('active');
+    }
+});
+
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    const icon = themeToggle.querySelector('i');
+    if (body.classList.contains('dark-theme')) {
+        icon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        icon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'light');
+    }
+});
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-theme');
+    const icon = themeToggle.querySelector('i');
+    icon.className = 'fas fa-sun';
+}
+
+// Search Functionality
+const searchResults = document.getElementById('searchResults');
+const categoryFilter = document.getElementById('categoryFilter');
+const priceFilter = document.getElementById('priceFilter');
+
+// Sample search data
+const searchData = [
+    { name: 'Canada', category: 'mountain city', price: 'mid', description: 'Experience stunning landscapes and vibrant cities' },
+    { name: 'Ghana', category: 'beach culture', price: 'budget', description: 'Discover rich history and beautiful beaches' },
+    { name: 'Kenya', category: 'adventure nature', price: 'mid', description: 'Embark on unforgettable safari adventures' },
+    { name: 'Bali', category: 'beach culture', price: 'mid', description: 'Tropical paradise with rich culture' },
+    { name: 'Switzerland', category: 'mountain city', price: 'luxury', description: 'Alpine beauty and urban sophistication' },
+    { name: 'Japan', category: 'city culture', price: 'mid', description: 'Modern cities and ancient traditions' }
+];
+
+function performSearch() {
+    const query = searchInput.value.toLowerCase();
+    const category = categoryFilter.value;
+    const price = priceFilter.value;
+    
+    let filteredResults = searchData.filter(item => {
+        const matchesQuery = item.name.toLowerCase().includes(query) || 
+                           item.description.toLowerCase().includes(query);
+        const matchesCategory = !category || item.category.includes(category);
+        const matchesPrice = !price || item.price === price;
+        
+        return matchesQuery && matchesCategory && matchesPrice;
+    });
+    
+    displaySearchResults(filteredResults);
+}
+
+searchInput.addEventListener('input', performSearch);
+categoryFilter.addEventListener('change', performSearch);
+priceFilter.addEventListener('change', performSearch);
+
+function displaySearchResults(results) {
+    if (results.length === 0) {
+        searchResults.innerHTML = '<p class="no-results">No destinations found matching your criteria.</p>';
+        return;
+    }
+    
+    searchResults.innerHTML = results.map(item => `
+        <div class="search-result-item">
+            <h4>${item.name}</h4>
+            <p>${item.description}</p>
+            <span class="search-result-category">${item.category}</span>
+            <span class="search-result-price">${item.price}</span>
+        </div>
+    `).join('');
+}
+
+// Add CSS for search results
+const searchStyles = document.createElement('style');
+searchStyles.textContent = `
+    .search-result-item {
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .search-result-item:hover {
+        background: #f8f9fa;
+    }
+    
+    .search-result-item h4 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+    
+    .search-result-item p {
+        color: #555;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .search-result-category,
+    .search-result-price {
+        display: inline-block;
+        background: #ecf0f1;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+    }
+    
+    .no-results {
+        text-align: center;
+        color: #7f8c8d;
+        padding: 2rem;
+    }
+`;
+document.head.appendChild(searchStyles);
+
+// Testimonials Slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.testimonial-slide');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.getElementById('prevTestimonial');
+const nextBtn = document.getElementById('nextTestimonial');
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+}
+
+// Event listeners for testimonial controls
+prevBtn.addEventListener('click', prevSlide);
+nextBtn.addEventListener('click', nextSlide);
+
+// Dot navigation
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+    });
+});
+
+// Auto-advance testimonials
+setInterval(nextSlide, 5000);
+
+// Destinations Filtering
+const filterBtns = document.querySelectorAll('.filter-btn');
+const destinationCards = document.querySelectorAll('.destination-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter destinations
+        destinationCards.forEach(card => {
+            const categories = card.dataset.category;
+            if (filter === 'all' || categories.includes(filter)) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.5s ease';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Newsletter Form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = this.querySelector('input[type="email"]').value;
+        const consent = this.querySelector('input[type="checkbox"]').checked;
+        
+        if (!consent) {
+            showNotification('Please agree to receive updates.', 'error');
+            return;
+        }
+        
+        showNotification('Thank you for subscribing to our newsletter!', 'success');
+        this.reset();
+        
+        // In a real application, you would send this to a server
+        console.log('Newsletter subscription:', email);
+    });
+}
+
 // Form submission handling
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -139,6 +366,24 @@ function showNotification(message, type = 'info') {
     });
 }
 
+// Back to Top Button
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -156,7 +401,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.destination-card, .package-card, .about-content, .contact-content');
+    const animatedElements = document.querySelectorAll('.destination-card, .package-card, .about-content, .contact-content, .blog-card, .testimonial-content');
     
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -276,6 +521,25 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
+// Animate quick stats
+const quickStatsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('[data-target]');
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.dataset.target);
+                animateCounter(stat, target);
+            });
+            quickStatsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+const quickStatsSection = document.querySelector('.quick-stats');
+if (quickStatsSection) {
+    quickStatsObserver.observe(quickStatsSection);
+}
+
 // Parallax effect for hero section
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
@@ -333,13 +597,50 @@ revealStyle.textContent = `
 `;
 document.head.appendChild(revealStyle);
 
+// Enhanced search functionality with keyboard navigation
+searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        searchOverlay.classList.remove('active');
+    }
+});
+
+// Blog card interactions
+document.querySelectorAll('.blog-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // Add click effect
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+        
+        // In a real application, this would navigate to the blog post
+        console.log('Blog post clicked:', this.querySelector('h3').textContent);
+    });
+});
+
+// Newsletter checkbox styling
+document.querySelectorAll('.newsletter-checkbox input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const label = this.nextElementSibling;
+        if (this.checked) {
+            label.style.color = 'white';
+        } else {
+            label.style.color = 'rgba(255, 255, 255, 0.9)';
+        }
+    });
+});
+
 // Console welcome message
 console.log(`
 🚀 Welcome to Wanderlust Travel!
-✨ A modern, responsive travel website
+✨ A modern, responsive travel website with advanced features
 🎨 Built with HTML5, CSS3, and JavaScript
 📱 Mobile-first design approach
 🎯 Interactive features and smooth animations
+🔍 Advanced search functionality
+🌙 Dark theme support
+📊 Dynamic statistics and testimonials
+📝 Blog and newsletter features
 `);
 
 // Performance optimization: Lazy loading for images
@@ -359,3 +660,34 @@ if ('IntersectionObserver' in window) {
         imageObserver.observe(img);
     });
 }
+
+// Add some fun Easter eggs
+let konamiCode = [];
+const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+
+document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.code);
+    if (konamiCode.length > konamiSequence.length) {
+        konamiCode.shift();
+    }
+    
+    if (konamiCode.join(',') === konamiSequence.join(',')) {
+        showNotification('🎉 Konami Code activated! You found the secret!', 'success');
+        // Add some fun effects
+        document.body.style.animation = 'rainbow 2s infinite';
+        
+        setTimeout(() => {
+            document.body.style.animation = '';
+        }, 2000);
+    }
+});
+
+// Add rainbow animation CSS
+const rainbowStyle = document.createElement('style');
+rainbowStyle.textContent = `
+    @keyframes rainbow {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
+`;
+document.head.appendChild(rainbowStyle);

@@ -31,9 +31,20 @@
                     <a href="#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
+                    <a href="#blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
+            <div class="nav-actions">
+                <button class="search-toggle" id="searchToggle">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -42,27 +53,134 @@
         </div>
     </nav>
 
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-header">
+                <h3>Search Destinations</h3>
+                <button class="search-close" id="searchClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-input-group">
+                <input type="text" id="searchInput" placeholder="Search for destinations, activities, or experiences...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="search-filters">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="beach">Beach</option>
+                    <option value="mountain">Mountain</option>
+                    <option value="city">City</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="culture">Culture</option>
+                </select>
+                <select id="priceFilter">
+                    <option value="">All Prices</option>
+                    <option value="budget">Budget ($)</option>
+                    <option value="mid">Mid-Range ($$)</option>
+                    <option value="luxury">Luxury ($$$)</option>
+                </select>
+            </div>
+            <div class="search-results" id="searchResults">
+                <!-- Search results will be populated here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-video-container">
+                <video autoplay muted loop class="hero-video">
+                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                </video>
+                <div class="hero-video-overlay"></div>
+            </div>
+            <div class="hero-image-fallback">
+                <img src="road.jpg" alt="Travel Background" class="hero-bg-img">
+            </div>
+        </div>
         <div class="hero-content">
             <h1 class="hero-title">Discover Your Next Adventure</h1>
             <p class="hero-subtitle">Explore breathtaking destinations and create unforgettable memories</p>
+            <div class="hero-search">
+                <div class="hero-search-box">
+                    <input type="text" placeholder="Where do you want to go?">
+                    <button class="hero-search-btn">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
             <div class="hero-buttons">
                 <button class="btn btn-primary">Explore Destinations</button>
                 <button class="btn btn-secondary">View Packages</button>
             </div>
         </div>
         <div class="hero-overlay"></div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="quick-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-content">
+                        <span class="stat-number" data-target="50000">0</span>
+                        <span class="stat-label">Happy Travelers</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-globe"></i>
+                    <div class="stat-content">
+                        <span class="stat-number" data-target="150">0</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-award"></i>
+                    <div class="stat-content">
+                        <span class="stat-number" data-target="25">0</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-content">
+                        <span class="stat-number" data-target="98">0</span>
+                        <span class="stat-label">% Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Destinations Section -->
     <section id="destinations" class="destinations">
         <div class="container">
             <h2 class="section-title">Popular Destinations</h2>
+            <div class="destinations-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="beach">Beach</button>
+                <button class="filter-btn" data-filter="mountain">Mountain</button>
+                <button class="filter-btn" data-filter="city">City</button>
+                <button class="filter-btn" data-filter="adventure">Adventure</button>
+            </div>
             <div class="destinations-grid">
-                <div class="destination-card">
+                <div class="destination-card" data-category="mountain city">
                     <div class="destination-image">
                         <img src="car.png" alt="Canada" class="destination-img">
+                        <div class="destination-badge">Popular</div>
+                        <div class="destination-overlay">
+                            <button class="btn btn-outline">View Details</button>
+                        </div>
                     </div>
                     <div class="destination-content">
                         <h3>Canada</h3>
@@ -73,13 +191,28 @@
                             <span class="feature"><i class="fas fa-city"></i> Cities</span>
                             <span class="feature"><i class="fas fa-snowflake"></i> Winter Sports</span>
                         </div>
+                        <div class="destination-meta">
+                            <span class="price">From $899</span>
+                            <span class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="rating-text">(4.8)</span>
+                            </span>
+                        </div>
                         <button class="btn btn-outline">Learn More</button>
                     </div>
                 </div>
 
-                <div class="destination-card">
+                <div class="destination-card" data-category="beach culture">
                     <div class="destination-image">
                         <img src="woman.png" alt="Ghana" class="destination-img">
+                        <div class="destination-badge">Trending</div>
+                        <div class="destination-overlay">
+                            <button class="btn btn-outline">View Details</button>
+                        </div>
                     </div>
                     <div class="destination-content">
                         <h3>Ghana</h3>
@@ -90,13 +223,28 @@
                             <span class="feature"><i class="fas fa-history"></i> History</span>
                             <span class="feature"><i class="fas fa-music"></i> Culture</span>
                         </div>
+                        <div class="destination-meta">
+                            <span class="price">From $699</span>
+                            <span class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="rating-text">(4.6)</span>
+                            </span>
+                        </div>
                         <button class="btn btn-outline">Learn More</button>
                     </div>
                 </div>
 
-                <div class="destination-card">
+                <div class="destination-card" data-category="adventure nature">
                     <div class="destination-image">
                         <img src="road.jpg" alt="Kenya" class="destination-img">
+                        <div class="destination-badge">New</div>
+                        <div class="destination-overlay">
+                            <button class="btn btn-outline">View Details</button>
+                        </div>
                     </div>
                     <div class="destination-content">
                         <h3>Kenya</h3>
@@ -107,9 +255,23 @@
                             <span class="feature"><i class="fas fa-camera"></i> Photography</span>
                             <span class="feature"><i class="fas fa-tree"></i> Nature</span>
                         </div>
+                        <div class="destination-meta">
+                            <span class="price">From $1299</span>
+                            <span class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="rating-text">(4.9)</span>
+                            </span>
+                        </div>
                         <button class="btn btn-outline">Learn More</button>
                     </div>
                 </div>
+            </div>
+            <div class="destinations-cta">
+                <button class="btn btn-primary">View All Destinations</button>
             </div>
         </div>
     </section>
@@ -186,6 +348,148 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <div class="testimonials-slider" id="testimonialsSlider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/80x80/3498db/ffffff?text=J" alt="John Doe">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"Amazing experience! The team at Wanderlust made our honeymoon unforgettable. Every detail was perfect, from the accommodations to the local guides."</p>
+                            <div class="testimonial-author">
+                                <h4>John & Sarah Doe</h4>
+                                <span>Honeymoon in Bali</span>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/80x80/e74c3c/ffffff?text=M" alt="Maria Garcia">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"I was nervous about traveling solo, but Wanderlust made me feel safe and supported throughout my entire journey. Highly recommend!"</p>
+                            <div class="testimonial-author">
+                                <h4>Maria Garcia</h4>
+                                <span>Solo Adventure in Japan</span>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/80x80/27ae60/ffffff?text=D" alt="David Chen">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>"The family package exceeded our expectations. Our kids had the time of their lives, and we parents could actually relax and enjoy the trip too!"</p>
+                            <div class="testimonial-author">
+                                <h4>David Chen</h4>
+                                <span>Family Trip to Costa Rica</span>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <button class="testimonial-btn prev" id="prevTestimonial">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonial-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+                <button class="testimonial-btn next" id="nextTestimonial">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section-title">Travel Inspiration & Tips</h2>
+            <div class="blog-grid">
+                <article class="blog-card featured">
+                    <div class="blog-image">
+                        <img src="road.jpg" alt="Travel Tips" class="blog-img">
+                        <div class="blog-category">Travel Tips</div>
+                    </div>
+                    <div class="blog-content">
+                        <h3>10 Essential Packing Tips for Every Traveler</h3>
+                        <p>Learn the art of packing efficiently and never forget important items again. From clothing to electronics, we've got you covered.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar"></i> March 15, 2024</span>
+                            <span class="blog-read-time"><i class="fas fa-clock"></i> 5 min read</span>
+                        </div>
+                        <button class="btn btn-outline">Read More</button>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="car.png" alt="Destination Guide" class="blog-img">
+                        <div class="blog-category">Destination Guide</div>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Hidden Gems: Off-the-Beaten-Path Destinations</h3>
+                        <p>Discover amazing places that most tourists never see. These hidden gems offer authentic experiences and unforgettable memories.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar"></i> March 12, 2024</span>
+                            <span class="blog-read-time"><i class="fas fa-clock"></i> 7 min read</span>
+                        </div>
+                        <button class="btn btn-outline">Read More</button>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="woman.png" alt="Budget Travel" class="blog-img">
+                        <div class="blog-category">Budget Travel</div>
+                    </div>
+                    <div class="blog-content">
+                        <h3>How to Travel the World on a Budget</h3>
+                        <p>Travel doesn't have to be expensive! Learn proven strategies to explore the world without breaking the bank.</p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar"></i> March 10, 2024</span>
+                            <span class="blog-read-time"><i class="fas fa-clock"></i> 6 min read</span>
+                        </div>
+                        <button class="btn btn-outline">Read More</button>
+                    </div>
+                </article>
+            </div>
+            <div class="blog-cta">
+                <button class="btn btn-primary">View All Articles</button>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
@@ -193,18 +497,18 @@
                 <div class="about-text">
                     <h2 class="section-title">About Wanderlust Travel</h2>
                     <p>We are passionate about creating extraordinary travel experiences that connect people with the world's most amazing destinations. Our team of travel experts works tirelessly to craft perfect itineraries that combine adventure, culture, and relaxation.</p>
-                    <p>With over 10 years of experience in the travel industry, we've helped thousands of travelers discover new horizons and create memories that last a lifetime.</p>
+                    <p>With over 25 years of experience in the travel industry, we've helped thousands of travelers discover new horizons and create memories that last a lifetime.</p>
                     <div class="stats">
                         <div class="stat">
-                            <span class="stat-number">10+</span>
+                            <span class="stat-number">25+</span>
                             <span class="stat-label">Years Experience</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">50+</span>
+                            <span class="stat-number">150+</span>
                             <span class="stat-label">Destinations</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">1000+</span>
+                            <span class="stat-number">50000+</span>
                             <span class="stat-label">Happy Travelers</span>
                         </div>
                     </div>
@@ -212,6 +516,26 @@
                 <div class="about-image">
                     <img src="road.jpg" alt="Travel Adventure" class="about-img">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated with Travel Inspiration</h2>
+                <p>Get the latest travel tips, destination guides, and exclusive offers delivered to your inbox.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="newsletter-input-group">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                    <div class="newsletter-checkbox">
+                        <input type="checkbox" id="newsletterConsent" required>
+                        <label for="newsletterConsent">I agree to receive travel updates and offers</label>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -237,6 +561,16 @@
                             <i class="fas fa-map-marker-alt"></i>
                             <span>123 Travel Street, Adventure City, AC 12345</span>
                         </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Fri: 9AM-6PM, Sat: 10AM-4PM</span>
+                        </div>
+                    </div>
+                    <div class="social-links-contact">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
@@ -295,6 +629,7 @@
                         <li><a href="#destinations">Destinations</a></li>
                         <li><a href="#packages">Packages</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#blog">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -318,6 +653,11 @@
             </div>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="script.js"></script>
 </body>
