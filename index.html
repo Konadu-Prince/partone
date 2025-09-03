@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust Travel - Explore the World</title>
+    <title>Wanderlust Travel - Book Your Dream Vacation</title>
     <link rel="stylesheet" href="part_one.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Stripe.js for payments -->
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -28,10 +30,13 @@
                     <a href="#packages" class="nav-link">Packages</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
+                    <a href="#deals" class="nav-link">Deals</a>
                 </li>
                 <li class="nav-item">
                     <a href="#blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
@@ -44,6 +49,13 @@
                 <button class="theme-toggle" id="themeToggle">
                     <i class="fas fa-moon"></i>
                 </button>
+                <button class="user-menu-toggle" id="userMenuToggle">
+                    <i class="fas fa-user"></i>
+                </button>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
             </div>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -52,6 +64,43 @@
             </div>
         </div>
     </nav>
+
+    <!-- User Menu Dropdown -->
+    <div class="user-menu" id="userMenu">
+        <div class="user-menu-header">
+            <i class="fas fa-user-circle"></i>
+            <span>Welcome, Traveler!</span>
+        </div>
+        <ul class="user-menu-items">
+            <li><a href="#" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="#" class="register-btn"><i class="fas fa-user-plus"></i> Register</a></li>
+            <li><a href="#" class="my-bookings"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
+            <li><a href="#" class="wishlist"><i class="fas fa-heart"></i> Wishlist</a></li>
+            <li><a href="#" class="premium-upgrade"><i class="fas fa-crown"></i> Upgrade to Premium</a></li>
+        </ul>
+    </div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Travel Cart</h3>
+            <button class="cart-close" id="cartClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary checkout-btn" id="checkoutBtn">
+                <i class="fas fa-credit-card"></i> Proceed to Checkout
+            </button>
+        </div>
+    </div>
 
     <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
@@ -104,25 +153,67 @@
             </div>
         </div>
         <div class="hero-content">
-            <h1 class="hero-title">Discover Your Next Adventure</h1>
-            <p class="hero-subtitle">Explore breathtaking destinations and create unforgettable memories</p>
+            <h1 class="hero-title">Book Your Dream Vacation Today</h1>
+            <p class="hero-subtitle">Exclusive deals, instant booking, and 24/7 support</p>
             <div class="hero-search">
                 <div class="hero-search-box">
                     <input type="text" placeholder="Where do you want to go?">
                     <button class="hero-search-btn">
                         <i class="fas fa-search"></i>
-                        Search
+                        Search & Book
                     </button>
                 </div>
             </div>
             <div class="hero-buttons">
-                <button class="btn btn-primary">Explore Destinations</button>
-                <button class="btn btn-secondary">View Packages</button>
+                <button class="btn btn-primary">View Deals</button>
+                <button class="btn btn-secondary">Book Now</button>
+            </div>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure Booking</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-clock"></i>
+                    <span>Instant Confirmation</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-headset"></i>
+                    <span>24/7 Support</span>
+                </div>
             </div>
         </div>
         <div class="hero-overlay"></div>
         <div class="scroll-indicator">
             <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Special Deals Banner -->
+    <section class="deals-banner">
+        <div class="container">
+            <div class="deals-content">
+                <h2>🔥 Limited Time Offers!</h2>
+                <p>Book now and save up to 40% on selected destinations</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -181,6 +272,10 @@
                         <div class="destination-overlay">
                             <button class="btn btn-outline">View Details</button>
                         </div>
+                        <div class="destination-price">
+                            <span class="price-amount">From $899</span>
+                            <span class="price-discount">Save $200</span>
+                        </div>
                     </div>
                     <div class="destination-content">
                         <h3>Canada</h3>
@@ -202,7 +297,12 @@
                                 <span class="rating-text">(4.8)</span>
                             </span>
                         </div>
-                        <button class="btn btn-outline">Learn More</button>
+                        <div class="destination-actions">
+                            <button class="btn btn-outline">Learn More</button>
+                            <button class="btn btn-primary add-to-cart" data-id="canada" data-price="899" data-name="Canada Adventure">
+                                <i class="fas fa-cart-plus"></i> Book Now
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -212,6 +312,10 @@
                         <div class="destination-badge">Trending</div>
                         <div class="destination-overlay">
                             <button class="btn btn-outline">View Details</button>
+                        </div>
+                        <div class="destination-price">
+                            <span class="price-amount">From $699</span>
+                            <span class="price-discount">Save $150</span>
                         </div>
                     </div>
                     <div class="destination-content">
@@ -234,7 +338,12 @@
                                 <span class="rating-text">(4.6)</span>
                             </span>
                         </div>
-                        <button class="btn btn-outline">Learn More</button>
+                        <div class="destination-actions">
+                            <button class="btn btn-outline">Learn More</button>
+                            <button class="btn btn-primary add-to-cart" data-id="ghana" data-price="699" data-name="Ghana Experience">
+                                <i class="fas fa-cart-plus"></i> Book Now
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -244,6 +353,10 @@
                         <div class="destination-badge">New</div>
                         <div class="destination-overlay">
                             <button class="btn btn-outline">View Details</button>
+                        </div>
+                        <div class="destination-price">
+                            <span class="price-amount">From $1299</span>
+                            <span class="price-discount">Save $300</span>
                         </div>
                     </div>
                     <div class="destination-content">
@@ -266,12 +379,53 @@
                                 <span class="rating-text">(4.9)</span>
                             </span>
                         </div>
-                        <button class="btn btn-outline">Learn More</button>
+                        <div class="destination-actions">
+                            <button class="btn btn-outline">Learn More</button>
+                            <button class="btn btn-primary add-to-cart" data-id="kenya" data-price="1299" data-name="Kenya Safari">
+                                <i class="fas fa-cart-plus"></i> Book Now
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="destinations-cta">
                 <button class="btn btn-primary">View All Destinations</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Membership Section -->
+    <section class="premium-membership">
+        <div class="container">
+            <div class="premium-content">
+                <div class="premium-text">
+                    <h2>Upgrade to Premium</h2>
+                    <p>Get exclusive access to premium destinations, VIP experiences, and personalized travel planning.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Exclusive premium destinations</li>
+                        <li><i class="fas fa-check"></i> VIP airport transfers</li>
+                        <li><i class="fas fa-check"></i> Personal travel concierge</li>
+                        <li><i class="fas fa-check"></i> Priority booking & support</li>
+                        <li><i class="fas fa-check"></i> Member-only discounts</li>
+                    </ul>
+                    <div class="premium-pricing">
+                        <div class="price-option">
+                            <h3>Monthly</h3>
+                            <div class="price">$29.99<span>/month</span></div>
+                            <button class="btn btn-primary">Subscribe Now</button>
+                        </div>
+                        <div class="price-option featured">
+                            <div class="popular-badge">Most Popular</div>
+                            <h3>Annual</h3>
+                            <div class="price">$299.99<span>/year</span></div>
+                            <div class="savings">Save $59.89</div>
+                            <button class="btn btn-primary">Subscribe Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="premium-image">
+                    <img src="road.jpg" alt="Premium Travel" class="premium-img">
+                </div>
             </div>
         </div>
     </section>
@@ -289,6 +443,7 @@
                             <span class="amount">1,299</span>
                             <span class="period">/person</span>
                         </div>
+                        <div class="package-badge">Limited Time</div>
                     </div>
                     <div class="package-features">
                         <ul>
@@ -299,7 +454,9 @@
                             <li><i class="fas fa-check"></i> Meals Included</li>
                         </ul>
                     </div>
-                    <button class="btn btn-primary">Book Now</button>
+                    <button class="btn btn-primary add-to-cart" data-id="adventure-explorer" data-price="1299" data-name="Adventure Explorer Package">
+                        <i class="fas fa-cart-plus"></i> Book Now
+                    </button>
                 </div>
 
                 <div class="package-card featured">
@@ -321,7 +478,9 @@
                             <li><i class="fas fa-check"></i> All-Inclusive</li>
                         </ul>
                     </div>
-                    <button class="btn btn-primary">Book Now</button>
+                    <button class="btn btn-primary add-to-cart" data-id="luxury-getaway" data-price="2499" data-name="Luxury Getaway Package">
+                        <i class="fas fa-cart-plus"></i> Book Now
+                    </button>
                 </div>
 
                 <div class="package-card">
@@ -342,7 +501,9 @@
                             <li><i class="fas fa-check"></i> Breakfast Only</li>
                         </ul>
                     </div>
-                    <button class="btn btn-primary">Book Now</button>
+                    <button class="btn btn-primary add-to-cart" data-id="budget-traveler" data-price="799" data-name="Budget Traveler Package">
+                        <i class="fas fa-cart-plus"></i> Book Now
+                    </button>
                 </div>
             </div>
         </div>
@@ -442,6 +603,7 @@
                     <div class="blog-image">
                         <img src="road.jpg" alt="Travel Tips" class="blog-img">
                         <div class="blog-category">Travel Tips</div>
+                        <div class="blog-premium-badge">Premium</div>
                     </div>
                     <div class="blog-content">
                         <h3>10 Essential Packing Tips for Every Traveler</h3>
@@ -450,7 +612,10 @@
                             <span class="blog-date"><i class="fas fa-calendar"></i> March 15, 2024</span>
                             <span class="blog-read-time"><i class="fas fa-clock"></i> 5 min read</span>
                         </div>
-                        <button class="btn btn-outline">Read More</button>
+                        <div class="blog-actions">
+                            <button class="btn btn-outline">Read More</button>
+                            <button class="btn btn-primary premium-unlock">Unlock Premium</button>
+                        </div>
                     </div>
                 </article>
                 <article class="blog-card">
@@ -658,6 +823,137 @@
     <button class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h3>Complete Your Booking</h3>
+                <button class="booking-modal-close" id="bookingModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="booking-modal-body">
+                <div class="booking-summary">
+                    <h4>Booking Summary</h4>
+                    <div class="booking-item">
+                        <span class="item-name" id="modalItemName">Package Name</span>
+                        <span class="item-price" id="modalItemPrice">$0.00</span>
+                    </div>
+                    <div class="booking-total">
+                        <span>Total:</span>
+                        <span class="total-amount" id="modalTotal">$0.00</span>
+                    </div>
+                </div>
+                <form class="booking-form" id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingFirstName">First Name</label>
+                            <input type="text" id="bookingFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingLastName">Last Name</label>
+                            <input type="text" id="bookingLastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingEmail">Email</label>
+                            <input type="email" id="bookingEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingPhone">Phone</label>
+                            <input type="tel" id="bookingPhone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingDate">Travel Date</label>
+                            <input type="date" id="bookingDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingGuests">Number of Guests</label>
+                            <select id="bookingGuests" required>
+                                <option value="">Select</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5+">5+ Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingSpecial">Special Requirements</label>
+                        <textarea id="bookingSpecial" rows="3" placeholder="Any special requests or requirements..."></textarea>
+                    </div>
+                    <div class="payment-section">
+                        <h4>Payment Information</h4>
+                        <div class="payment-methods">
+                            <label class="payment-method">
+                                <input type="radio" name="paymentMethod" value="card" checked>
+                                <span class="payment-method-label">
+                                    <i class="fas fa-credit-card"></i>
+                                    Credit/Debit Card
+                                </span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="paymentMethod" value="paypal">
+                                <span class="payment-method-label">
+                                    <i class="fab fa-paypal"></i>
+                                    PayPal
+                                </span>
+                            </label>
+                        </div>
+                        <div class="card-inputs" id="cardInputs">
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cardExpiry">Expiry Date</label>
+                                    <input type="text" id="cardExpiry" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardCVC">CVC</label>
+                                    <input type="text" id="cardCVC" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-actions">
+                        <button type="button" class="btn btn-outline" id="cancelBooking">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-lock"></i> Secure Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div class="payment-success-modal" id="paymentSuccessModal">
+        <div class="success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Payment Successful!</h3>
+            <p>Your booking has been confirmed. You will receive a confirmation email shortly.</p>
+            <div class="success-details">
+                <div class="success-item">
+                    <span>Booking ID:</span>
+                    <span id="successBookingId">WL-2024-001</span>
+                </div>
+                <div class="success-item">
+                    <span>Amount Paid:</span>
+                    <span id="successAmount">$0.00</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="closeSuccessModal">Continue</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

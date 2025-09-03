@@ -1,3 +1,34 @@
+// Shopping Cart System
+let cart = [];
+let cartTotal = 0;
+
+// Cart functionality
+const cartIcon = document.getElementById('cartIcon');
+const cartSidebar = document.getElementById('cartSidebar');
+const cartClose = document.getElementById('cartClose');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const cartTotalElement = document.getElementById('cartTotal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+// User Menu
+const userMenuToggle = document.getElementById('userMenuToggle');
+const userMenu = document.getElementById('userMenu');
+
+// Booking Modal
+const bookingModal = document.getElementById('bookingModal');
+const bookingModalClose = document.getElementById('bookingModalClose');
+const cancelBooking = document.getElementById('cancelBooking');
+const paymentSuccessModal = document.getElementById('paymentSuccessModal');
+const closeSuccessModal = document.getElementById('closeSuccessModal');
+
+// Countdown Timer
+const countdown = document.getElementById('countdown');
+const daysElement = document.getElementById('days');
+const hoursElement = document.getElementById('hours');
+const minutesElement = document.getElementById('minutes');
+const secondsElement = document.getElementById('seconds');
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -40,6 +71,213 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
     }
 });
+
+// Cart Toggle
+cartIcon.addEventListener('click', () => {
+    cartSidebar.classList.add('active');
+});
+
+cartClose.addEventListener('click', () => {
+    cartSidebar.classList.remove('active');
+});
+
+// User Menu Toggle
+userMenuToggle.addEventListener('click', () => {
+    userMenu.classList.toggle('active');
+});
+
+// Close user menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!userMenuToggle.contains(e.target) && !userMenu.contains(e.target)) {
+        userMenu.classList.remove('active');
+    }
+});
+
+// Add to Cart Functionality
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-to-cart')) {
+        const button = e.target;
+        const id = button.dataset.id;
+        const price = parseFloat(button.dataset.price);
+        const name = button.dataset.name;
+        
+        addToCart(id, name, price);
+        showNotification(`${name} added to cart!`, 'success');
+    }
+});
+
+function addToCart(id, name, price) {
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    updateCart();
+}
+
+function updateCart() {
+    // Update cart count
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    
+    // Update cart items display
+    cartItems.innerHTML = '';
+    cartTotal = 0;
+    
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        cartTotal += itemTotal;
+        
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <div class="cart-item-image">
+                <img src="road.jpg" alt="${item.name}">
+            </div>
+            <div class="cart-item-details">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">$${item.price} x ${item.quantity}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        cartItems.appendChild(cartItem);
+    });
+    
+    // Update total
+    cartTotalElement.textContent = `$${cartTotal.toFixed(2)}`;
+    
+    // Save cart to localStorage
+    localStorage.setItem('wanderlustCart', JSON.stringify(cart));
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+    showNotification('Item removed from cart', 'info');
+}
+
+// Load cart from localStorage
+function loadCart() {
+    const savedCart = localStorage.getItem('wanderlustCart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCart();
+    }
+}
+
+// Checkout functionality
+checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty!', 'error');
+        return;
+    }
+    
+    // Show booking modal
+    showBookingModal();
+});
+
+// Booking Modal Functions
+function showBookingModal() {
+    const firstItem = cart[0];
+    document.getElementById('modalItemName').textContent = firstItem.name;
+    document.getElementById('modalItemPrice').textContent = `$${firstItem.price.toFixed(2)}`;
+    document.getElementById('modalTotal').textContent = `$${cartTotal.toFixed(2)}`;
+    
+    bookingModal.classList.add('active');
+}
+
+bookingModalClose.addEventListener('click', () => {
+    bookingModal.classList.remove('active');
+});
+
+cancelBooking.addEventListener('click', () => {
+    bookingModal.classList.remove('active');
+});
+
+// Close modal when clicking outside
+bookingModal.addEventListener('click', (e) => {
+    if (e.target === bookingModal) {
+        bookingModal.classList.remove('active');
+    }
+});
+
+// Payment method toggle
+document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const cardInputs = document.getElementById('cardInputs');
+        if (this.value === 'card') {
+            cardInputs.classList.add('active');
+        } else {
+            cardInputs.classList.remove('active');
+        }
+    });
+});
+
+// Booking form submission
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Simulate payment processing
+    showNotification('Processing payment...', 'info');
+    
+    setTimeout(() => {
+        // Simulate successful payment
+        bookingModal.classList.remove('active');
+        showPaymentSuccess();
+        
+        // Clear cart
+        cart = [];
+        updateCart();
+        
+        // Reset form
+        this.reset();
+        
+        showNotification('Booking confirmed! Check your email for details.', 'success');
+    }, 2000);
+});
+
+function showPaymentSuccess() {
+    document.getElementById('successAmount').textContent = `$${cartTotal.toFixed(2)}`;
+    document.getElementById('successBookingId').textContent = `WL-${Date.now().toString().slice(-6)}`;
+    paymentSuccessModal.classList.add('active');
+}
+
+closeSuccessModal.addEventListener('click', () => {
+    paymentSuccessModal.classList.remove('active');
+});
+
+// Countdown Timer
+function updateCountdown() {
+    const now = new Date().getTime();
+    const endDate = new Date('2024-12-31T23:59:59').getTime();
+    const timeLeft = endDate - now;
+    
+    if (timeLeft > 0) {
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        daysElement.textContent = days.toString().padStart(2, '0');
+        hoursElement.textContent = hours.toString().padStart(2, '0');
+        minutesElement.textContent = minutes.toString().padStart(2, '0');
+        secondsElement.textContent = seconds.toString().padStart(2, '0');
+    }
+}
+
+// Update countdown every second
+setInterval(updateCountdown, 1000);
+updateCountdown(); // Initial call
 
 // Search Overlay Functionality
 const searchToggle = document.getElementById('searchToggle');
@@ -302,6 +540,23 @@ if (contactForm) {
     });
 }
 
+// Premium features
+document.querySelectorAll('.premium-unlock').forEach(button => {
+    button.addEventListener('click', () => {
+        showNotification('Upgrade to Premium to unlock this content!', 'info');
+        // In a real app, this would redirect to premium signup
+    });
+});
+
+// Premium subscription buttons
+document.querySelectorAll('.premium-pricing .btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const plan = button.closest('.price-option').querySelector('h3').textContent;
+        showNotification(`Redirecting to ${plan} subscription...`, 'info');
+        // In a real app, this would redirect to payment processing
+    });
+});
+
 // Notification system
 function showNotification(message, type = 'info') {
     // Remove existing notifications
@@ -409,81 +664,9 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
-});
-
-// Button click effects
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        // Create ripple effect
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.cssText = `
-            position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            left: ${x}px;
-            top: ${y}px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
-        `;
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    });
-});
-
-// Add ripple animation to CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Package card hover effects
-document.querySelectorAll('.package-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        if (!this.classList.contains('featured')) {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        }
-    });
     
-    card.addEventListener('mouseleave', function() {
-        if (!this.classList.contains('featured')) {
-            this.style.transform = 'translateY(0) scale(1)';
-        }
-    });
-});
-
-// Destination card image zoom effect
-document.querySelectorAll('.destination-card').forEach(card => {
-    const img = card.querySelector('.destination-img');
-    
-    card.addEventListener('mouseenter', () => {
-        if (img) {
-            img.style.transform = 'scale(1.1)';
-        }
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        if (img) {
-            img.style.transform = 'scale(1)';
-        }
-    });
+    // Load cart from localStorage
+    loadCart();
 });
 
 // Counter animation for stats
@@ -632,8 +815,8 @@ document.querySelectorAll('.newsletter-checkbox input[type="checkbox"]').forEach
 
 // Console welcome message
 console.log(`
-🚀 Welcome to Wanderlust Travel!
-✨ A modern, responsive travel website with advanced features
+🚀 Welcome to Wanderlust Travel - Monetization Ready!
+✨ A professional travel booking platform with e-commerce capabilities
 🎨 Built with HTML5, CSS3, and JavaScript
 📱 Mobile-first design approach
 🎯 Interactive features and smooth animations
@@ -641,6 +824,10 @@ console.log(`
 🌙 Dark theme support
 📊 Dynamic statistics and testimonials
 📝 Blog and newsletter features
+🛒 Shopping cart and booking system
+💳 Payment processing integration
+👑 Premium membership tiers
+⏰ Limited time offers and countdown timers
 `);
 
 // Performance optimization: Lazy loading for images
