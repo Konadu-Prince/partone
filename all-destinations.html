@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Destinations - Wanderlust Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="wanderlust-styles.css">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-dark">Wanderlust</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html#destinations" class="text-dark hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Destinations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-primary to-secondary py-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Explore All Destinations</h1>
+            <p class="text-xl text-white/90 mb-8">Discover amazing places around the world and plan your next adventure</p>
+            
+            <!-- Search and Filter -->
+            <div class="max-w-4xl mx-auto">
+                <div class="flex gap-4 mb-6">
+                    <input type="text" placeholder="Search destinations..." class="flex-1 px-4 py-3 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <button class="btn-primary px-6 py-3 bg-white text-primary font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">All</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Mountain</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Beach</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">City</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Adventure</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Culture</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destinations Grid -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Canada -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/canada-mountain.jpg" alt="Canada" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-star mr-1"></i>Popular
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Canada</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Mountain & City</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Experience stunning landscapes and vibrant cities in the Great White North.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.8)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $899</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ghana -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/ghana-beach.jpg" alt="Ghana" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-accent to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-fire mr-1"></i>Trending
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Ghana</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Beach & Culture</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Discover rich history, beautiful beaches, and warm hospitality in West Africa.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star-half-alt text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.6)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $699</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kenya -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/kenya-safari.jpg" alt="Kenya" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-success to-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-leaf mr-1"></i>Adventure
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Kenya</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Adventure & Nature</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Embark on unforgettable safari adventures and witness the Great Migration.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.9)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $1,299</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Japan -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/hero-bg.jpg" alt="Japan" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-secondary to-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-sparkles mr-1"></i>Culture
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Japan</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">City & Culture</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Experience the perfect blend of ancient traditions and modern innovation.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.8)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $1,199</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iceland -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/hero-bg.jpg" alt="Iceland" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-snowflake mr-1"></i>Nature
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Iceland</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Adventure & Nature</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Witness the Northern Lights and explore the land of fire and ice.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.9)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $1,999</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thailand -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div class="relative">
+                    <img src="travel-assets/hero-bg.jpg" alt="Thailand" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-accent to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-umbrella-beach mr-1"></i>Beach
+                    </div>
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-dark mb-2">Thailand</h3>
+                    <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Beach & Culture</p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">Discover tropical beaches, ancient temples, and vibrant street food culture.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-star-half-alt text-accent"></i>
+                            <span class="text-sm text-gray-500 font-semibold">(4.5)</span>
+                        </div>
+                        <span class="text-lg font-bold text-primary">From $599</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="destination-details.html" class="btn-secondary flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                        <button class="btn-primary flex-1 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-cart-plus mr-1"></i> Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="btn-primary px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <i class="fas fa-plus mr-2"></i>Load More Destinations
+            </button>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="bg-gradient-to-r from-primary to-secondary py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Ready for Your Next Adventure?</h2>
+            <p class="text-xl text-white/90 mb-8">Get personalized travel recommendations and exclusive deals delivered to your inbox.</p>
+            <form class="max-w-md mx-auto flex gap-4">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+                <button type="submit" class="btn-primary px-6 py-3 bg-white text-primary font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="wanderlust-app.js"></script>
+</body>
+</html>

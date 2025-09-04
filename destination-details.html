@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Details - Wanderlust Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="wanderlust-styles.css">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-dark">Wanderlust</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html#destinations" class="text-dark hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Destinations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative h-96 bg-gradient-to-r from-primary/20 to-secondary/20">
+        <img src="travel-assets/canada-mountain.jpg" alt="Canada Adventure" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Canada Adventure</h1>
+                <p class="text-xl mb-6">Experience the stunning landscapes and vibrant cities of Canada</p>
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-star text-accent"></i>
+                        <span class="text-lg font-semibold">4.8</span>
+                        <span class="text-gray-300">(2,847 reviews)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-clock text-accent"></i>
+                        <span>7-14 days</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-users text-accent"></i>
+                        <span>2-8 people</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Overview -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-dark mb-6">Overview</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Discover the breathtaking beauty of Canada, from the majestic Rocky Mountains to the vibrant cities of Toronto and Vancouver. This adventure takes you through some of the most stunning landscapes in North America, offering a perfect blend of outdoor activities and urban exploration.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Experience world-class skiing, hiking through pristine wilderness, and exploring charming mountain towns. Visit iconic landmarks like Niagara Falls, Banff National Park, and the CN Tower while immersing yourself in Canadian culture and hospitality.
+                    </p>
+                </div>
+
+                <!-- Highlights -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-dark mb-6">Trip Highlights</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-mountain text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Rocky Mountain Adventure</h3>
+                                <p class="text-gray-600">Hike through Banff and Jasper National Parks, witness stunning glaciers and crystal-clear lakes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-city text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Urban Exploration</h3>
+                                <p class="text-gray-600">Explore Toronto's CN Tower, Vancouver's Stanley Park, and Montreal's historic Old Town.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-water text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Niagara Falls</h3>
+                                <p class="text-gray-600">Experience the power and beauty of one of the world's most famous waterfalls.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-skiing text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Winter Sports</h3>
+                                <p class="text-gray-600">Enjoy world-class skiing and snowboarding at Whistler and other premier resorts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Itinerary -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-dark mb-6">Itinerary</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Day 1-2: Toronto Arrival</h3>
+                                <p class="text-gray-600">Arrive in Toronto, explore the CN Tower, visit the Royal Ontario Museum, and enjoy the vibrant food scene in Kensington Market.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Day 3-4: Niagara Falls</h3>
+                                <p class="text-gray-600">Take a day trip to Niagara Falls, experience the Hornblower cruise, and explore the charming town of Niagara-on-the-Lake.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Day 5-7: Banff National Park</h3>
+                                <p class="text-gray-600">Fly to Calgary and drive to Banff. Hike to Lake Louise, explore the town of Banff, and take the gondola to Sulphur Mountain.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark mb-2">Day 8-10: Vancouver</h3>
+                                <p class="text-gray-600">Fly to Vancouver, explore Stanley Park, visit Granville Island, and enjoy the city's diverse culinary scene.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-dark mb-6">Photo Gallery</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <img src="travel-assets/canada-mountain.jpg" alt="Canadian Mountains" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <img src="travel-assets/hero-bg.jpg" alt="Canadian Landscape" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <img src="travel-assets/canada-mountain.jpg" alt="Banff National Park" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <img src="travel-assets/hero-bg.jpg" alt="Toronto Skyline" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <img src="travel-assets/canada-mountain.jpg" alt="Vancouver" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                        <img src="travel-assets/hero-bg.jpg" alt="Niagara Falls" class="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Booking Card -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                    <div class="text-center mb-6">
+                        <div class="text-3xl font-bold text-primary mb-2">From $899</div>
+                        <div class="text-sm text-gray-500">per person</div>
+                        <div class="text-sm text-success font-semibold mt-2">Save $200 - Limited Time!</div>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Duration:</span>
+                            <span class="font-semibold">7-14 days</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Group Size:</span>
+                            <span class="font-semibold">2-8 people</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Difficulty:</span>
+                            <span class="font-semibold">Moderate</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Best Time:</span>
+                            <span class="font-semibold">May - October</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary w-full px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 mb-4">
+                        <i class="fas fa-calendar-check mr-2"></i>Book Now
+                    </button>
+
+                    <button class="btn-secondary w-full px-6 py-3 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 mb-4">
+                        <i class="fas fa-heart mr-2"></i>Add to Wishlist
+                    </button>
+
+                    <button class="w-full px-6 py-3 border-2 border-gray-300 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300">
+                        <i class="fas fa-share mr-2"></i>Share
+                    </button>
+                </div>
+
+                <!-- What's Included -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-dark mb-4">What's Included</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">All accommodations</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">Domestic flights</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">Professional guide</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">All activities listed</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">Transportation</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success"></i>
+                            <span class="text-gray-600">Breakfast daily</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Reviews -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-dark mb-4">Recent Reviews</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="flex text-accent">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-500">by John D.</span>
+                            </div>
+                            <p class="text-gray-600 text-sm">"Amazing trip! The Canadian Rockies were absolutely breathtaking. Our guide was knowledgeable and the accommodations were perfect."</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="flex text-accent">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-500">by Sarah M.</span>
+                            </div>
+                            <p class="text-gray-600 text-sm">"Perfect balance of adventure and relaxation. The itinerary was well-planned and we saw so much in just 10 days."</p>
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-secondary text-sm font-semibold mt-4">
+                        View All Reviews
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="wanderlust-app.js"></script>
+</body>
+</html>

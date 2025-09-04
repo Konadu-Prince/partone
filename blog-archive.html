@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Archive - Wanderlust Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="wanderlust-styles.css">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-dark">Wanderlust</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html#blog" class="text-dark hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-primary to-secondary py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Travel Blog</h1>
+            <p class="text-xl text-white/90 mb-8">Discover amazing destinations, travel tips, and inspiring stories from around the world</p>
+            
+            <!-- Search and Filter -->
+            <div class="max-w-2xl mx-auto">
+                <div class="flex gap-4 mb-6">
+                    <input type="text" placeholder="Search articles..." class="flex-1 px-4 py-3 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <button class="btn-primary px-6 py-3 bg-white text-primary font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">All</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Travel Tips</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Destinations</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Budget Travel</button>
+                    <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all duration-300">Adventure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Featured Post -->
+            <article class="md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/budget-travel.jpg" alt="Budget Travel Tips" class="w-full h-64 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">
+                        <i class="fas fa-star mr-1"></i>Featured
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 15, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>5 min read</span>
+                        </span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark mb-3">Budget Travel Tips: How to See the World for Less</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Traveling doesn't have to break the bank. With the right strategies and mindset, you can explore amazing destinations while keeping your budget intact. Here are our top tips for budget-conscious travelers.
+                    </p>
+                    <a href="blog-post.html" class="btn-primary inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Regular Posts -->
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/hidden-gems.jpg" alt="Hidden Gems" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-accent to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Destination Guide
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 12, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>7 min read</span>
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-3">Hidden Gems: Off-the-Beaten-Path Destinations</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        Discover amazing places that most tourists never see. These hidden gems offer authentic experiences and unforgettable memories.
+                    </p>
+                    <a href="blog-post.html" class="btn-secondary inline-flex items-center px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-sm">
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/travel-tips.jpg" alt="Travel Tips" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-success to-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Travel Tips
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 10, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>6 min read</span>
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-3">The Ultimate Budget Travel Guide</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        Everything you need to know about traveling on a budget, from finding cheap flights to saving on accommodations.
+                    </p>
+                    <a href="blog-post.html" class="btn-secondary inline-flex items-center px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-sm">
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/hero-bg.jpg" alt="Solo Travel" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-secondary to-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Adventure
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 8, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>8 min read</span>
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-3">Solo Travel: A Guide to Exploring the World Alone</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        Discover the freedom and self-discovery that comes with solo travel. Tips for staying safe and making the most of your journey.
+                    </p>
+                    <a href="blog-post.html" class="btn-secondary inline-flex items-center px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-sm">
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/canada-mountain.jpg" alt="Canada Travel" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Destinations
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 5, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>9 min read</span>
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-3">Canada's Hidden Wonders: Beyond the Cities</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        Explore Canada's stunning natural beauty, from the Rocky Mountains to the Northern Lights. A complete guide to Canada's outdoor adventures.
+                    </p>
+                    <a href="blog-post.html" class="btn-secondary inline-flex items-center px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-sm">
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="relative">
+                    <img src="travel-assets/kenya-safari.jpg" alt="Safari Guide" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-accent to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Wildlife
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 3, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>7 min read</span>
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-dark mb-3">Safari Photography: Capturing Africa's Wildlife</h3>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        Learn the best techniques for photographing wildlife on safari. Tips for equipment, timing, and getting the perfect shot.
+                    </p>
+                    <a href="blog-post.html" class="btn-secondary inline-flex items-center px-4 py-2 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary hover:text-white transition-all duration-300 text-sm">
+                        Read More
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="btn-primary px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <i class="fas fa-plus mr-2"></i>Load More Articles
+            </button>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="bg-gradient-to-r from-primary to-secondary py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Stay Updated with Travel Tips</h2>
+            <p class="text-xl text-white/90 mb-8">Get the latest travel advice and destination guides delivered to your inbox.</p>
+            <form class="max-w-md mx-auto flex gap-4">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+                <button type="submit" class="btn-primary px-6 py-3 bg-white text-primary font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="wanderlust-app.js"></script>
+</body>
+</html>
