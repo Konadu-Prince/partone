@@ -68,7 +68,7 @@ A professional, responsive travel and tourism website built with modern web tech
 
 ```
 wanderlust-travel-website/
-├── wanderlust-travel.html      # Main HTML file with complete website structure
+├── index.html                  # Main HTML file with complete website structure
 ├── wanderlust-styles.css       # CSS file with Tailwind CSS imports
 ├── wanderlust-app.js           # JavaScript functionality and interactions
 ├── travel-assets/              # Professional travel image assets
