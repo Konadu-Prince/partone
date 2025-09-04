@@ -101,6 +101,23 @@ wanderlust-travel/
    
    # Or manually
    npx http-server -p 8080 -o wanderlust-travel.html
+   ```
+
+## 🌐 GitHub Pages Deployment
+
+### Automatic Deployment
+This website is configured for automatic deployment to GitHub Pages. Every push to the `main` branch will automatically deploy to GitHub Pages.
+
+### Manual Setup (if needed)
+1. Go to your repository settings on GitHub
+2. Navigate to "Pages" section
+3. Set source to "GitHub Actions"
+4. The workflow will automatically deploy your site
+
+### Access Your Live Site
+Once deployed, your website will be available at:
+```
+https://konadu-prince.github.io/partone/
 ```
    # Using PHP
    php -S localhost:8000
