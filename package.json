@@ -1,5 +1,5 @@
 {
-  "name": "wanderlust-travel",
+  "name": "wanderlust-travel-website",
   "version": "1.0.0",
   "description": "A modern, responsive travel and tourism website built with HTML5, CSS3, and JavaScript",
   "main": "wanderlust-travel.html",
@@ -27,12 +27,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/wanderlust-travel.git"
+    "url": "git+https://github.com/Konadu-Prince/partone.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/wanderlust-travel/issues"
+    "url": "https://github.com/Konadu-Prince/partone/issues"
   },
-  "homepage": "https://yourusername.github.io/wanderlust-travel",
+  "homepage": "https://konadu-prince.github.io/partone",
   "devDependencies": {
     "http-server": "^14.1.1",
     "tailwindcss": "^4.1.12"
