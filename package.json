@@ -27,12 +27,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Konadu-Prince/partone.git"
+    "url": "git+https://github.com/Konadu-Prince/wanderlust-travel-website.git"
   },
   "bugs": {
-    "url": "https://github.com/Konadu-Prince/partone/issues"
+    "url": "https://github.com/Konadu-Prince/wanderlust-travel-website/issues"
   },
-  "homepage": "https://konadu-prince.github.io/partone",
+  "homepage": "https://konadu-prince.github.io/wanderlust-travel-website",
   "devDependencies": {
     "http-server": "^14.1.1",
     "tailwindcss": "^4.1.12"

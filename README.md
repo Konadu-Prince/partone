@@ -117,7 +117,7 @@ This website is configured for automatic deployment to GitHub Pages. Every push 
 ### Access Your Live Site
 Once deployed, your website will be available at:
 ```
-https://konadu-prince.github.io/partone/
+https://konadu-prince.github.io/wanderlust-travel-website/
 ```
    # Using PHP
    php -S localhost:8000
