@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Travel - Book Your Dream Vacation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Stripe.js for payments -->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="font-poppins bg-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                    <span class="text-xl font-bold text-dark">Wanderlust</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Home</a>
+                    <a href="#destinations" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Destinations</a>
+                    <a href="#packages" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Packages</a>
+                    <a href="#deals" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Deals</a>
+                    <a href="#blog" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Blog</a>
+                    <a href="#about" class="text-dark hover:text-primary transition-colors duration-300 font-medium">About</a>
+                    <a href="#contact" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Contact</a>
+                </div>
+                
+                <!-- Navigation Actions -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="themeToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-moon text-lg"></i>
+                    </button>
+                    <button id="userMenuToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    <div id="cartIcon" class="relative p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-md transition-all duration-300">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- User Menu Dropdown -->
+    <div id="userMenu" class="hidden absolute top-16 right-4 bg-white rounded-xl shadow-2xl border border-gray-200 min-w-72 z-50">
+        <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 rounded-t-xl text-center">
+            <i class="fas fa-user-circle text-4xl mb-3"></i>
+            <span class="text-lg font-semibold">Welcome, Traveler!</span>
+        </div>
+        <ul class="py-4">
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-sign-in-alt w-5"></i> <span>Login</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-user-plus w-5"></i> <span>Register</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-calendar-check w-5"></i> <span>My Bookings</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-heart w-5"></i> <span>Wishlist</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-crown w-5"></i> <span>Upgrade to Premium</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 right-0 w-96 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold">Your Travel Cart</h3>
+                <button id="cartClose" class="p-2 hover:bg-white/20 rounded-full transition-all duration-300">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+        </div>
+        <div id="cartItems" class="p-6 max-h-96 overflow-y-auto">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-gray-200">
+            <div class="flex justify-between items-center mb-4 text-lg font-bold">
+                <span>Total:</span>
+                <span id="cartTotal" class="text-success text-xl">$0.00</span>
+            </div>
+            <button id="checkoutBtn" class="w-full bg-gradient-to-r from-success to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                <i class="fas fa-credit-card mr-2"></i> Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="searchOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl mx-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-dark">Search Destinations</h3>
+                    <button id="searchClose" class="p-2 text-gray-500 hover:text-secondary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex space-x-3 mb-6">
+                    <input type="text" id="searchInput" placeholder="Search for destinations, activities, or experiences..." class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                    <button class="px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-search mr-2"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <select id="categoryFilter" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                        <option value="">All Categories</option>
+                        <option value="beach">Beach</option>
+                        <option value="mountain">Mountain</option>
+                        <option value="city">City</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="culture">Culture</option>
+                    </select>
+                    <select id="priceFilter" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                        <option value="">All Prices</option>
+                        <option value="budget">Budget ($)</option>
+                        <option value="mid">Mid-Range ($$)</option>
+                        <option value="luxury">Luxury ($$$)</option>
+                    </select>
+                </div>
+                <div id="searchResults" class="border-t border-gray-200 pt-4 max-h-64 overflow-y-auto">
+                    <!-- Search results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="hidden">
+                <video autoplay muted loop class="w-full h-full object-cover">
+                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                </video>
+            </div>
+            <img src="travel-assets/hero-bg.jpg" alt="Travel Background" class="w-full h-full object-cover brightness-75">
+        </div>
+        
+        <!-- Hero Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-dark/60 to-primary/50 z-10"></div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-20 max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
+                Book Your Dream Vacation Today
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-95 animate-fade-in-up animation-delay-200">
+                Exclusive deals, instant booking, and 24/7 support
+            </p>
+            
+            <!-- Hero Search -->
+            <div class="mb-8 animate-fade-in-up animation-delay-300">
+                <div class="flex max-w-2xl mx-auto bg-white/95 backdrop-blur-md rounded-full overflow-hidden shadow-2xl">
+                    <input type="text" placeholder="Where do you want to go?" class="flex-1 px-6 py-4 text-lg border-none outline-none bg-transparent text-dark">
+                    <button class="px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold hover:shadow-lg transition-all duration-300 flex items-center space-x-2">
+                        <i class="fas fa-search"></i>
+                        <span>Search & Book</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hero Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in-up animation-delay-400">
+                <button class="px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    View Deals
+                </button>
+                <button class="px-8 py-4 bg-gradient-to-r from-secondary to-red-600 text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    Book Now
+                </button>
+            </div>
+            
+            <!-- Hero Features -->
+            <div class="flex flex-wrap justify-center gap-6 animate-fade-in-up animation-delay-500">
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-shield-alt text-accent text-xl"></i>
+                    <span class="font-medium">Secure Booking</span>
+                </div>
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-clock text-accent text-xl"></i>
+                    <span class="font-medium">Instant Confirmation</span>
+                </div>
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-headset text-accent text-xl"></i>
+                    <span class="font-medium">24/7 Support</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce-slow">
+            <div class="w-6 h-6 border-2 border-white border-t-0 border-l-0 transform rotate-45"></div>
+        </div>
+    </section>
+
+    <!-- Special Deals Banner -->
+    <section class="bg-gradient-to-r from-secondary to-red-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">🔥 Limited Time Offers!</h2>
+            <p class="text-xl mb-12 opacity-95">Book now and save up to 40% on selected destinations</p>
+            
+            <!-- Countdown Timer -->
+            <div class="flex flex-wrap justify-center gap-6" id="countdown">
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="days" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Days</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="hours" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Hours</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="minutes" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Minutes</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="seconds" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-users text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="50000">0</div>
+                    <div class="stat-label text-lg text-gray-600">Happy Travelers</div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-globe text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="150">0</div>
+                    <div class="stat-label text-lg text-gray-600">Countries</div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-award text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="25">0</div>
+                    <div class="stat-label text-lg text-gray-600">Years Experience</div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-star text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="98">0</div>
+                    <div class="stat-label text-lg text-gray-600">% Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                Popular Destinations
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <!-- Destination Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300 active" data-filter="all">All</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="beach">Beach</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="mountain">Mountain</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="city">City</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="adventure">Adventure</button>
+            </div>
+            
+            <!-- Destinations Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Canada Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="mountain city">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="travel-assets/canada-mountain.jpg" alt="Canada" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">Popular</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $899</span>
+                            <span class="block text-sm text-success">Save $200</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Canada</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Ottawa</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Experience the stunning landscapes, vibrant cities, and rich culture of the Great White North.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-mountain text-primary"></i>
+                                <span>Nature</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-city text-primary"></i>
+                                <span>Cities</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-snowflake text-primary"></i>
+                                <span>Winter Sports</span>
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $899</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.8)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="canada" data-price="899" data-name="Canada Adventure">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ghana Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="beach culture">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="travel-assets/ghana-beach.jpg" alt="Ghana" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">Trending</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $699</span>
+                            <span class="block text-sm text-success">Save $150</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Ghana</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Accra</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Discover the rich history, beautiful beaches, and warm hospitality of West Africa.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-umbrella-beach text-primary"></i>
+                                <span>Beaches</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-history text-primary"></i>
+                                <span>History</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-music text-primary"></i>
+                                <span>Culture</span>
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $699</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star-half-alt text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.6)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="ghana" data-price="699" data-name="Ghana Experience">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kenya Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="adventure nature">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="travel-assets/kenya-safari.jpg" alt="Kenya" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">New</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $1299</span>
+                            <span class="block text-sm text-success">Save $300</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Kenya</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Nairobi</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Embark on an unforgettable safari adventure in the heart of East Africa.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-lion text-primary"></i>
+                                <span>Wildlife</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-camera text-primary"></i>
+                                <span>Photography</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-tree text-primary"></i>
+                                <span>Nature</span>
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $1299</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.9)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="kenya" data-price="1299" data-name="Kenya Safari">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View All CTA -->
+            <div class="text-center">
+                <button class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    View All Destinations
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Membership Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-dark mb-6">
+                        Upgrade to Premium
+                    </h2>
+                    <p class="text-xl text-gray-600 leading-relaxed">
+                        Get exclusive access to premium destinations, VIP experiences, and personalized travel planning.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success text-xl"></i>
+                            <span class="text-lg text-dark">Exclusive premium destinations</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success text-xl"></i>
+                            <span class="text-lg text-dark">VIP airport transfers</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success text-xl"></i>
+                            <span class="text-lg text-dark">Personal travel concierge</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success text-xl"></i>
+                            <span class="text-lg text-dark">Priority booking & support</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-success text-xl"></i>
+                            <span class="text-lg text-dark">Member-only discounts</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                            <h3 class="text-xl font-bold text-dark mb-3">Monthly</h3>
+                            <div class="text-3xl font-bold text-primary mb-4">
+                                $29.99<span class="text-lg text-gray-500 font-normal">/month</span>
+                            </div>
+                            <button class="w-full px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300">
+                                Subscribe Now
+                            </button>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                                Most Popular
+                            </div>
+                            <h3 class="text-xl font-bold text-dark mb-3">Annual</h3>
+                            <div class="text-3xl font-bold text-primary mb-2">
+                                $299.99<span class="text-lg text-gray-500 font-normal">/year</span>
+                            </div>
+                            <div class="text-success font-semibold mb-4">Save $59.89</div>
+                            <button class="w-full px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300">
+                                Subscribe Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <img src="travel-assets/premium-travel.jpg" alt="Premium Travel" class="w-full h-96 object-cover rounded-2xl shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                Travel Packages
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Adventure Explorer Package -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-dark">Adventure Explorer</h3>
+                            <div class="bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                Limited Time
+                            </div>
+                        </div>
+                        
+                        <div class="text-4xl font-bold text-primary mb-6">
+                            <span class="text-2xl">$</span>1,299
+                            <span class="text-lg text-gray-500 font-normal">/person</span>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">7 Days / 6 Nights</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Guided Tours</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Accommodation</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Transportation</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Meals Included</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="adventure-explorer" data-price="1299" data-name="Adventure Explorer Package">
+                            <i class="fas fa-cart-plus mr-2"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Luxury Getaway Package -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                        Most Popular
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-6">Luxury Getaway</h3>
+                        
+                        <div class="text-4xl font-bold text-primary mb-6">
+                            <span class="text-2xl">$</span>2,499
+                            <span class="text-lg text-gray-500 font-normal">/person</span>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">10 Days / 9 Nights</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">5-Star Hotels</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Private Guide</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Premium Transport</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">All-Inclusive</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="luxury-getaway" data-price="2499" data-name="Luxury Getaway Package">
+                            <i class="fas fa-cart-plus mr-2"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Budget Traveler Package -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-6">Budget Traveler</h3>
+                        
+                        <div class="text-4xl font-bold text-primary mb-6">
+                            <span class="text-2xl">$</span>799
+                            <span class="text-lg text-gray-500 font-normal">/person</span>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">5 Days / 4 Nights</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Hostel Stay</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Group Tours</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Public Transport</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-gray-700">Breakfast Only</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="budget-traveler" data-price="799" data-name="Budget Traveler Package">
+                            <i class="fas fa-cart-plus mr-2"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                What Our Travelers Say
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <div class="testimonials-slider" id="testimonialsSlider">
+                <div class="testimonial-slide active">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
+                            <div class="mb-8">
+                                <div class="w-20 h-20 mx-auto bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                                    J
+                                </div>
+                                <div class="text-lg text-gray-600 leading-relaxed mb-6">
+                                    "Amazing experience! The team at Wanderlust made our honeymoon unforgettable. Every detail was perfect, from the accommodations to the local guides."
+                                </div>
+                                <div class="space-y-2">
+                                    <h4 class="text-xl font-bold text-dark">John & Sarah Doe</h4>
+                                    <span class="text-primary font-medium">Honeymoon in Bali</span>
+                                    <div class="flex justify-center space-x-1 mt-3">
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
+                            <div class="mb-8">
+                                <div class="w-20 h-20 mx-auto bg-gradient-to-r from-secondary to-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                                    M
+                                </div>
+                                <div class="text-lg text-gray-600 leading-relaxed mb-6">
+                                    "I was nervous about traveling solo, but Wanderlust made me feel safe and supported throughout my entire journey. Highly recommend!"
+                                </div>
+                                <div class="space-y-2">
+                                    <h4 class="text-xl font-bold text-dark">Maria Garcia</h4>
+                                    <span class="text-primary font-medium">Solo Adventure in Japan</span>
+                                    <div class="flex justify-center space-x-1 mt-3">
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
+                            <div class="mb-8">
+                                <div class="w-20 h-20 mx-auto bg-gradient-to-r from-success to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                                    D
+                                </div>
+                                <div class="text-lg text-gray-600 leading-relaxed mb-6">
+                                    "The family package exceeded our expectations. Our kids had the time of their lives, and we parents could actually relax and enjoy the trip too!"
+                                </div>
+                                <div class="space-y-2">
+                                    <h4 class="text-xl font-bold text-dark">David Chen</h4>
+                                    <span class="text-primary font-medium">Family Trip to Costa Rica</span>
+                                    <div class="flex justify-center space-x-1 mt-3">
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                        <i class="fas fa-star text-accent"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial Controls -->
+            <div class="flex justify-center items-center space-x-6 mt-12">
+                <button class="testimonial-btn prev p-3 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300" id="prevTestimonial">
+                    <i class="fas fa-chevron-left text-xl"></i>
+                </button>
+                
+                <div class="flex space-x-3">
+                    <span class="dot w-3 h-3 bg-primary rounded-full cursor-pointer transition-all duration-300 active" data-slide="0"></span>
+                    <span class="dot w-3 h-3 bg-gray-300 rounded-full cursor-pointer transition-all duration-300" data-slide="1"></span>
+                    <span class="dot w-3 h-3 bg-gray-300 rounded-full cursor-pointer transition-all duration-300" data-slide="2"></span>
+                </div>
+                
+                <button class="testimonial-btn next p-3 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300" id="nextTestimonial">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                Travel Inspiration & Tips
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Featured Blog Post -->
+                <article class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100">
+                    <div class="relative">
+                        <img src="travel-assets/travel-tips.jpg" alt="Travel Tips" class="w-full h-48 object-cover rounded-t-2xl">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Travel Tips
+                        </div>
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-accent to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Premium
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-3 leading-tight">
+                            10 Essential Packing Tips for Every Traveler
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Learn the art of packing efficiently and never forget important items again. From clothing to electronics, we've got you covered.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-6 text-sm text-gray-500">
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-calendar"></i>
+                                <span>March 15, 2024</span>
+                            </span>
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-clock"></i>
+                                <span>5 min read</span>
+                            </span>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-2 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Read More
+                            </button>
+                            <button class="flex-1 px-4 py-2 bg-gradient-to-r from-accent to-yellow-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 premium-unlock">
+                                Unlock Premium
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Regular Blog Post -->
+                <article class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100">
+                    <div class="relative">
+                        <img src="travel-assets/hidden-gems.jpg" alt="Destination Guide" class="w-full h-48 object-cover rounded-t-2xl">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Destination Guide
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-3 leading-tight">
+                            Hidden Gems: Off-the-Beaten-Path Destinations
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Discover amazing places that most tourists never see. These hidden gems offer authentic experiences and unforgettable memories.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-6 text-sm text-gray-500">
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-calendar"></i>
+                                <span>March 12, 2024</span>
+                            </span>
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-clock"></i>
+                                <span>7 min read</span>
+                            </span>
+                        </div>
+                        
+                        <button class="w-full px-4 py-2 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                            Read More
+                        </button>
+                    </div>
+                </article>
+                
+                <!-- Budget Travel Post -->
+                <article class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-4 border border-gray-100">
+                    <div class="relative">
+                        <img src="travel-assets/budget-travel.jpg" alt="Budget Travel" class="w-full h-48 object-cover rounded-t-2xl">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Budget Travel
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-3 leading-tight">
+                            How to Travel the World on a Budget
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Travel doesn't have to be expensive! Learn proven strategies to explore the world without breaking the bank.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-6 text-sm text-gray-500">
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-calendar"></i>
+                                <span>March 10, 2024</span>
+                            </span>
+                            <span class="flex items-center space-x-2">
+                                <i class="fas fa-clock"></i>
+                                <span>6 min read</span>
+                            </span>
+                        </div>
+                        
+                        <button class="w-full px-4 py-2 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                            Read More
+                        </button>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- View All CTA -->
+            <div class="text-center">
+                <button class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    View All Articles
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-dark mb-6">
+                        About Wanderlust Travel
+                    </h2>
+                    <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
+                        <p>
+                            We are passionate about creating extraordinary travel experiences that connect people with the world's most amazing destinations. Our team of travel experts works tirelessly to craft perfect itineraries that combine adventure, culture, and relaxation.
+                        </p>
+                        <p>
+                            With over 25 years of experience in the travel industry, we've helped thousands of travelers discover new horizons and create memories that last a lifetime.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-primary mb-2">25+</div>
+                            <div class="text-gray-600 font-medium">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-primary mb-2">150+</div>
+                            <div class="text-gray-600 font-medium">Destinations</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-primary mb-2">50000+</div>
+                            <div class="text-gray-600 font-medium">Happy Travelers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <img src="travel-assets/about-travel.jpg" alt="Travel Adventure" class="w-full h-96 object-cover rounded-2xl shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-blue-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Stay Updated with Travel Inspiration
+            </h2>
+            <p class="text-xl mb-12 opacity-95 leading-relaxed">
+                Get the latest travel tips, destination guides, and exclusive offers delivered to your inbox.
+            </p>
+            
+            <form class="newsletter-form space-y-6" id="newsletterForm">
+                <div class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                    <input type="email" placeholder="Enter your email address" required 
+                           class="flex-1 px-6 py-4 text-lg border-2 border-white/30 rounded-full bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:border-white focus:outline-none transition-all duration-300">
+                    <button type="submit" 
+                            class="px-8 py-4 bg-white text-primary font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        Subscribe
+                    </button>
+                </div>
+                
+                <div class="flex items-center justify-center space-x-3">
+                    <input type="checkbox" id="newsletterConsent" required 
+                           class="w-5 h-5 text-primary rounded focus:ring-primary focus:ring-2">
+                    <label for="newsletterConsent" class="text-lg opacity-95">
+                        I agree to receive travel updates and offers
+                    </label>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                Get In Touch
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-bold text-dark mb-4">
+                        Let's Plan Your Next Adventure
+                    </h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        Ready to start your journey? Contact us today and let our travel experts help you create the perfect itinerary.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-phone text-xl"></i>
+                            </div>
+                            <span class="text-lg text-dark">+1 (555) 123-4567</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <span class="text-lg text-dark">info@wanderlust.com</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <span class="text-lg text-dark">123 Travel Street, Adventure City, AC 12345</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                            <span class="text-lg text-dark">Mon-Fri: 9AM-6PM, Sat: 10AM-4PM</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="bg-gray-50 p-8 rounded-2xl">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="fullName" class="block text-sm font-semibold text-dark mb-2">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-dark mb-2">Email</label>
+                                <input type="email" id="email" name="email" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold text-dark mb-2">Phone</label>
+                                <input type="tel" id="phone" name="phone" 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="destination" class="block text-sm font-semibold text-dark mb-2">Preferred Destination</label>
+                                <select id="destination" name="destination" 
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                                    <option value="">Select a destination</option>
+                                    <option value="canada">Canada</option>
+                                    <option value="ghana">Ghana</option>
+                                    <option value="kenya">Kenya</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-dark mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell us about your travel dreams..." 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300 resize-none"></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-globe-americas text-3xl text-primary"></i>
+                        <span class="text-2xl font-bold">Wanderlust Travel</span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">
+                        Your gateway to extraordinary adventures around the world.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-bold text-white">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-300 hover:text-primary transition-colors duration-300">Home</a></li>
+                        <li><a href="#destinations" class="text-gray-300 hover:text-primary transition-colors duration-300">Destinations</a></li>
+                        <li><a href="#packages" class="text-gray-300 hover:text-primary transition-colors duration-300">Packages</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-primary transition-colors duration-300">About</a></li>
+                        <li><a href="#blog" class="text-gray-300 hover:text-primary transition-colors duration-300">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Destinations -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-bold text-white">Destinations</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors duration-300">Canada</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors duration-300">Ghana</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors duration-300">Kenya</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary transition-colors duration-300">More...</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-bold text-white">Contact Info</h4>
+                    <div class="space-y-3">
+                        <p class="flex items-center space-x-3 text-gray-300">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </p>
+                        <p class="flex items-center space-x-3 text-gray-300">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span>info@wanderlust.com</span>
+                        </p>
+                        <p class="flex items-center space-x-3 text-gray-300">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            <span>Adventure City, AC 12345</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-gray-400">
+                    &copy; 2024 Wanderlust Travel. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-primary to-secondary text-white rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 invisible z-40" id="backToTop">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50" id="bookingModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="bg-white rounded-2xl shadow-2xl">
+                <!-- Modal Header -->
+                <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 rounded-t-2xl">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold">Complete Your Booking</h3>
+                        <button class="booking-modal-close p-2 hover:bg-white/20 rounded-full transition-all duration-300" id="bookingModalClose">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="p-8">
+                    <!-- Booking Summary -->
+                    <div class="bg-gray-50 p-6 rounded-xl mb-8">
+                        <h4 class="text-xl font-bold text-dark mb-4">Booking Summary</h4>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="item-name text-lg text-dark" id="modalItemName">Package Name</span>
+                            <span class="item-price text-lg font-bold text-primary" id="modalItemPrice">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 border-t border-gray-200">
+                            <span class="text-lg font-bold text-dark">Total:</span>
+                            <span class="total-amount text-2xl font-bold text-success" id="modalTotal">$0.00</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Booking Form -->
+                    <form class="booking-form space-y-6" id="bookingForm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="bookingFirstName" class="block text-sm font-semibold text-dark mb-2">First Name</label>
+                                <input type="text" id="bookingFirstName" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="bookingLastName" class="block text-sm font-semibold text-dark mb-2">Last Name</label>
+                                <input type="text" id="bookingLastName" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="bookingEmail" class="block text-sm font-semibold text-dark mb-2">Email</label>
+                                <input type="email" id="bookingEmail" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="bookingPhone" class="block text-sm font-semibold text-dark mb-2">Phone</label>
+                                <input type="tel" id="bookingPhone" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="bookingDate" class="block text-sm font-semibold text-dark mb-2">Travel Date</label>
+                                <input type="date" id="bookingDate" required 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="bookingGuests" class="block text-sm font-semibold text-dark mb-2">Number of Guests</label>
+                                <select id="bookingGuests" required 
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                                    <option value="">Select</option>
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5+">5+ Guests</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="bookingSpecial" class="block text-sm font-semibold text-dark mb-2">Special Requirements</label>
+                            <textarea id="bookingSpecial" rows="3" placeholder="Any special requests or requirements..." 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300 resize-none"></textarea>
+                        </div>
+                        
+                        <!-- Payment Section -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold text-dark mb-4">Payment Information</h4>
+                            
+                            <div class="space-y-4 mb-6">
+                                <label class="payment-method flex items-center space-x-3 cursor-pointer">
+                                    <input type="radio" name="paymentMethod" value="card" checked 
+                                           class="w-5 h-5 text-primary focus:ring-primary focus:ring-2">
+                                    <span class="payment-method-label flex items-center space-x-3 text-lg">
+                                        <i class="fas fa-credit-card text-primary"></i>
+                                        <span>Credit/Debit Card</span>
+                                    </span>
+                                </label>
+                                <label class="payment-method flex items-center space-x-3 cursor-pointer">
+                                    <input type="radio" name="paymentMethod" value="paypal" 
+                                           class="w-5 h-5 text-primary focus:ring-primary focus:ring-2">
+                                    <span class="payment-method-label flex items-center space-x-3 text-lg">
+                                        <i class="fab fa-paypal text-primary"></i>
+                                        <span>PayPal</span>
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <div class="card-inputs space-y-4" id="cardInputs">
+                                <div>
+                                    <label for="cardNumber" class="block text-sm font-semibold text-dark mb-2">Card Number</label>
+                                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" 
+                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="cardExpiry" class="block text-sm font-semibold text-dark mb-2">Expiry Date</label>
+                                        <input type="text" id="cardExpiry" placeholder="MM/YY" 
+                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                                    </div>
+                                    <div>
+                                        <label for="cardCVC" class="block text-sm font-semibold text-dark mb-2">CVC</label>
+                                        <input type="text" id="cardCVC" placeholder="123" 
+                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-all duration-300">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex gap-4 pt-6">
+                            <button type="button" class="flex-1 px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300" id="cancelBooking">
+                                Cancel
+                            </button>
+                            <button type="submit" class="flex-1 px-6 py-3 bg-gradient-to-r from-success to-green-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300">
+                                <i class="fas fa-lock mr-2"></i> Secure Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div class="payment-success-modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50" id="paymentSuccessModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md mx-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 text-center">
+                <div class="success-icon w-20 h-20 mx-auto bg-gradient-to-r from-success to-green-600 rounded-full flex items-center justify-center text-white text-4xl mb-6">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-dark mb-4">Payment Successful!</h3>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Your booking has been confirmed. You will receive a confirmation email shortly.
+                </p>
+                
+                <div class="bg-gray-50 p-6 rounded-xl space-y-4 mb-8">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Booking ID:</span>
+                        <span class="font-semibold text-dark" id="successBookingId">WL-2024-001</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Amount Paid:</span>
+                        <span class="font-semibold text-success text-lg" id="successAmount">$0.00</span>
+                    </div>
+                </div>
+                
+                <button class="w-full px-8 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300" id="closeSuccessModal">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="wanderlust-app.js"></script>
+</body>
+</html>

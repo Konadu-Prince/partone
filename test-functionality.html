@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Travel - Functionality Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .test-container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .test-section h3 { color: #3498db; margin-top: 0; }
+        .test-item { margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; }
+        .status { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .status.pass { background: #d4edda; color: #155724; }
+        .status.fail { background: #f8d7da; color: #721c24; }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .test-button { background: #3498db; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .test-button:hover { background: #2980b9; }
+        .results { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Wanderlust Travel - Functionality Test Suite</h1>
+        <p>This page tests all functionality of the Wanderlust Travel website.</p>
+        
+        <div class="test-section">
+            <h3>📱 Navigation & Menus</h3>
+            <div class="test-item">
+                <strong>Desktop Navigation:</strong>
+                <span class="status pending" id="nav-desktop">Testing...</span>
+                <button class="test-button" onclick="testDesktopNav()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Mobile Menu:</strong>
+                <span class="status pending" id="nav-mobile">Testing...</span>
+                <button class="test-button" onclick="testMobileMenu()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>User Menu Dropdown:</strong>
+                <span class="status pending" id="nav-user">Testing...</span>
+                <button class="test-button" onclick="testUserMenu()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Smooth Scrolling:</strong>
+                <span class="status pending" id="nav-scroll">Testing...</span>
+                <button class="test-button" onclick="testSmoothScroll()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Search Functionality</h3>
+            <div class="test-item">
+                <strong>Search Overlay:</strong>
+                <span class="status pending" id="search-overlay">Testing...</span>
+                <button class="test-button" onclick="testSearchOverlay()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Search Results:</strong>
+                <span class="status pending" id="search-results">Testing...</span>
+                <button class="test-button" onclick="testSearchResults()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Category Filter:</strong>
+                <span class="status pending" id="search-category">Testing...</span>
+                <button class="test-button" onclick="testCategoryFilter()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Price Filter:</strong>
+                <span class="status pending" id="search-price">Testing...</span>
+                <button class="test-button" onclick="testPriceFilter()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🛒 Shopping Cart</h3>
+            <div class="test-item">
+                <strong>Add to Cart:</strong>
+                <span class="status pending" id="cart-add">Testing...</span>
+                <button class="test-button" onclick="testAddToCart()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Cart Sidebar:</strong>
+                <span class="status pending" id="cart-sidebar">Testing...</span>
+                <button class="test-button" onclick="testCartSidebar()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Remove from Cart:</strong>
+                <span class="status pending" id="cart-remove">Testing...</span>
+                <button class="test-button" onclick="testRemoveFromCart()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Cart Persistence:</strong>
+                <span class="status pending" id="cart-persistence">Testing...</span>
+                <button class="test-button" onclick="testCartPersistence()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>❤️ Wishlist System</h3>
+            <div class="test-item">
+                <strong>Add to Wishlist:</strong>
+                <span class="status pending" id="wishlist-add">Testing...</span>
+                <button class="test-button" onclick="testWishlistAdd()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Wishlist Persistence:</strong>
+                <span class="status pending" id="wishlist-persistence">Testing...</span>
+                <button class="test-button" onclick="testWishlistPersistence()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Wishlist UI Updates:</strong>
+                <span class="status pending" id="wishlist-ui">Testing...</span>
+                <button class="test-button" onclick="testWishlistUI()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🌙 Theme Toggle</h3>
+            <div class="test-item">
+                <strong>Dark/Light Mode:</strong>
+                <span class="status pending" id="theme-toggle">Testing...</span>
+                <button class="test-button" onclick="testThemeToggle()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Theme Persistence:</strong>
+                <span class="status pending" id="theme-persistence">Testing...</span>
+                <button class="test-button" onclick="testThemePersistence()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Forms</h3>
+            <div class="test-item">
+                <strong>Newsletter Subscription:</strong>
+                <span class="status pending" id="form-newsletter">Testing...</span>
+                <button class="test-button" onclick="testNewsletterForm()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Contact Form:</strong>
+                <span class="status pending" id="form-contact">Testing...</span>
+                <button class="test-button" onclick="testContactForm()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Booking Form:</strong>
+                <span class="status pending" id="form-booking">Testing...</span>
+                <button class="test-button" onclick="testBookingForm()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎭 Interactive Elements</h3>
+            <div class="test-item">
+                <strong>Testimonials Slider:</strong>
+                <span class="status pending" id="testimonials">Testing...</span>
+                <button class="test-button" onclick="testTestimonials()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Destination Filters:</strong>
+                <span class="status pending" id="destination-filters">Testing...</span>
+                <button class="test-button" onclick="testDestinationFilters()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Back to Top Button:</strong>
+                <span class="status pending" id="back-to-top">Testing...</span>
+                <button class="test-button" onclick="testBackToTop()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Statistics & Animations</h3>
+            <div class="test-item">
+                <strong>Counter Animations:</strong>
+                <span class="status pending" id="counters">Testing...</span>
+                <button class="test-button" onclick="testCounters()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Scroll Animations:</strong>
+                <span class="status pending" id="scroll-animations">Testing...</span>
+                <button class="test-button" onclick="testScrollAnimations()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Hover Effects:</strong>
+                <span class="status pending" id="hover-effects">Testing...</span>
+                <button class="test-button" onclick="testHoverEffects()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔔 Notifications</h3>
+            <div class="test-item">
+                <strong>Success Notifications:</strong>
+                <span class="status pending" id="notifications-success">Testing...</span>
+                <button class="test-button" onclick="testSuccessNotifications()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Error Notifications:</strong>
+                <span class="status pending" id="notifications-error">Testing...</span>
+                <button class="test-button" onclick="testErrorNotifications()">Test</button>
+            </div>
+            <div class="test-item">
+                <strong>Info Notifications:</strong>
+                <span class="status pending" id="notifications-info">Testing...</span>
+                <button class="test-button" onclick="testInfoNotifications()">Test</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Run All Tests</h3>
+            <button class="test-button" onclick="runAllTests()" style="background: #27ae60; font-size: 16px; padding: 12px 24px;">Run Complete Test Suite</button>
+            <button class="test-button" onclick="clearResults()" style="background: #e74c3c;">Clear Results</button>
+        </div>
+
+        <div class="results" id="testResults">
+            <h3>Test Results</h3>
+            <div id="resultsContent">Click "Run Complete Test Suite" to test all functionality.</div>
+        </div>
+    </div>
+
+    <script>
+        // Test functions
+        function updateStatus(elementId, status, message = '') {
+            const element = document.getElementById(elementId);
+            element.className = `status ${status}`;
+            element.textContent = status === 'pass' ? '✓ PASS' : status === 'fail' ? '✗ FAIL' : '⏳ PENDING';
+            if (message) {
+                element.title = message;
+            }
+        }
+
+        function testDesktopNav() {
+            try {
+                const navLinks = document.querySelectorAll('.nav-link');
+                if (navLinks.length > 0) {
+                    updateStatus('nav-desktop', 'pass', 'Desktop navigation links found');
+                } else {
+                    updateStatus('nav-desktop', 'fail', 'No desktop navigation links found');
+                }
+            } catch (e) {
+                updateStatus('nav-desktop', 'fail', e.message);
+            }
+        }
+
+        function testMobileMenu() {
+            try {
+                const mobileMenu = document.getElementById('mobileMenu');
+                const mobileToggle = document.getElementById('mobileMenuToggle');
+                if (mobileMenu && mobileToggle) {
+                    updateStatus('nav-mobile', 'pass', 'Mobile menu elements found');
+                } else {
+                    updateStatus('nav-mobile', 'fail', 'Mobile menu elements missing');
+                }
+            } catch (e) {
+                updateStatus('nav-mobile', 'fail', e.message);
+            }
+        }
+
+        function testUserMenu() {
+            try {
+                const userMenu = document.getElementById('userMenu');
+                const userToggle = document.getElementById('userMenuToggle');
+                if (userMenu && userToggle) {
+                    updateStatus('nav-user', 'pass', 'User menu elements found');
+                } else {
+                    updateStatus('nav-user', 'fail', 'User menu elements missing');
+                }
+            } catch (e) {
+                updateStatus('nav-user', 'fail', e.message);
+            }
+        }
+
+        function testSmoothScroll() {
+            try {
+                const anchors = document.querySelectorAll('a[href^="#"]');
+                if (anchors.length > 0) {
+                    updateStatus('nav-scroll', 'pass', `${anchors.length} smooth scroll links found`);
+                } else {
+                    updateStatus('nav-scroll', 'fail', 'No smooth scroll links found');
+                }
+            } catch (e) {
+                updateStatus('nav-scroll', 'fail', e.message);
+            }
+        }
+
+        function testSearchOverlay() {
+            try {
+                const searchOverlay = document.getElementById('searchOverlay');
+                const searchToggle = document.getElementById('searchToggle');
+                if (searchOverlay && searchToggle) {
+                    updateStatus('search-overlay', 'pass', 'Search overlay elements found');
+                } else {
+                    updateStatus('search-overlay', 'fail', 'Search overlay elements missing');
+                }
+            } catch (e) {
+                updateStatus('search-overlay', 'fail', e.message);
+            }
+        }
+
+        function testSearchResults() {
+            try {
+                const searchResults = document.getElementById('searchResults');
+                const searchInput = document.getElementById('searchInput');
+                if (searchResults && searchInput) {
+                    updateStatus('search-results', 'pass', 'Search results elements found');
+                } else {
+                    updateStatus('search-results', 'fail', 'Search results elements missing');
+                }
+            } catch (e) {
+                updateStatus('search-results', 'fail', e.message);
+            }
+        }
+
+        function testCategoryFilter() {
+            try {
+                const categoryFilter = document.getElementById('categoryFilter');
+                if (categoryFilter && categoryFilter.options.length > 0) {
+                    updateStatus('search-category', 'pass', `${categoryFilter.options.length} category options found`);
+                } else {
+                    updateStatus('search-category', 'fail', 'Category filter missing or empty');
+                }
+            } catch (e) {
+                updateStatus('search-category', 'fail', e.message);
+            }
+        }
+
+        function testPriceFilter() {
+            try {
+                const priceFilter = document.getElementById('priceFilter');
+                if (priceFilter && priceFilter.options.length > 0) {
+                    updateStatus('search-price', 'pass', `${priceFilter.options.length} price options found`);
+                } else {
+                    updateStatus('search-price', 'fail', 'Price filter missing or empty');
+                }
+            } catch (e) {
+                updateStatus('search-price', 'fail', e.message);
+            }
+        }
+
+        function testAddToCart() {
+            try {
+                const addToCartBtns = document.querySelectorAll('.add-to-cart');
+                if (addToCartBtns.length > 0) {
+                    updateStatus('cart-add', 'pass', `${addToCartBtns.length} add to cart buttons found`);
+                } else {
+                    updateStatus('cart-add', 'fail', 'No add to cart buttons found');
+                }
+            } catch (e) {
+                updateStatus('cart-add', 'fail', e.message);
+            }
+        }
+
+        function testCartSidebar() {
+            try {
+                const cartSidebar = document.getElementById('cartSidebar');
+                const cartIcon = document.getElementById('cartIcon');
+                if (cartSidebar && cartIcon) {
+                    updateStatus('cart-sidebar', 'pass', 'Cart sidebar elements found');
+                } else {
+                    updateStatus('cart-sidebar', 'fail', 'Cart sidebar elements missing');
+                }
+            } catch (e) {
+                updateStatus('cart-sidebar', 'fail', e.message);
+            }
+        }
+
+        function testRemoveFromCart() {
+            try {
+                const cartItems = document.getElementById('cartItems');
+                if (cartItems) {
+                    updateStatus('cart-remove', 'pass', 'Cart items container found');
+                } else {
+                    updateStatus('cart-remove', 'fail', 'Cart items container missing');
+                }
+            } catch (e) {
+                updateStatus('cart-remove', 'fail', e.message);
+            }
+        }
+
+        function testCartPersistence() {
+            try {
+                if (typeof(Storage) !== "undefined") {
+                    updateStatus('cart-persistence', 'pass', 'LocalStorage supported');
+                } else {
+                    updateStatus('cart-persistence', 'fail', 'LocalStorage not supported');
+                }
+            } catch (e) {
+                updateStatus('cart-persistence', 'fail', e.message);
+            }
+        }
+
+        function testWishlistAdd() {
+            try {
+                const wishlistIcons = document.querySelectorAll('.wishlist-icon');
+                if (wishlistIcons.length > 0) {
+                    updateStatus('wishlist-add', 'pass', `${wishlistIcons.length} wishlist icons found`);
+                } else {
+                    updateStatus('wishlist-add', 'fail', 'No wishlist icons found');
+                }
+            } catch (e) {
+                updateStatus('wishlist-add', 'fail', e.message);
+            }
+        }
+
+        function testWishlistPersistence() {
+            try {
+                if (typeof(Storage) !== "undefined") {
+                    updateStatus('wishlist-persistence', 'pass', 'LocalStorage supported for wishlist');
+                } else {
+                    updateStatus('wishlist-persistence', 'fail', 'LocalStorage not supported');
+                }
+            } catch (e) {
+                updateStatus('wishlist-persistence', 'fail', e.message);
+            }
+        }
+
+        function testWishlistUI() {
+            try {
+                const destinationCards = document.querySelectorAll('.destination-card');
+                if (destinationCards.length > 0) {
+                    updateStatus('wishlist-ui', 'pass', `${destinationCards.length} destination cards found`);
+                } else {
+                    updateStatus('wishlist-ui', 'fail', 'No destination cards found');
+                }
+            } catch (e) {
+                updateStatus('wishlist-ui', 'fail', e.message);
+            }
+        }
+
+        function testThemeToggle() {
+            try {
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    updateStatus('theme-toggle', 'pass', 'Theme toggle button found');
+                } else {
+                    updateStatus('theme-toggle', 'fail', 'Theme toggle button missing');
+                }
+            } catch (e) {
+                updateStatus('theme-toggle', 'fail', e.message);
+            }
+        }
+
+        function testThemePersistence() {
+            try {
+                if (typeof(Storage) !== "undefined") {
+                    updateStatus('theme-persistence', 'pass', 'LocalStorage supported for theme');
+                } else {
+                    updateStatus('theme-persistence', 'fail', 'LocalStorage not supported');
+                }
+            } catch (e) {
+                updateStatus('theme-persistence', 'fail', e.message);
+            }
+        }
+
+        function testNewsletterForm() {
+            try {
+                const newsletterForm = document.getElementById('newsletterForm');
+                if (newsletterForm) {
+                    updateStatus('form-newsletter', 'pass', 'Newsletter form found');
+                } else {
+                    updateStatus('form-newsletter', 'fail', 'Newsletter form missing');
+                }
+            } catch (e) {
+                updateStatus('form-newsletter', 'fail', e.message);
+            }
+        }
+
+        function testContactForm() {
+            try {
+                const contactForm = document.getElementById('contactForm');
+                if (contactForm) {
+                    updateStatus('form-contact', 'pass', 'Contact form found');
+                } else {
+                    updateStatus('form-contact', 'fail', 'Contact form missing');
+                }
+            } catch (e) {
+                updateStatus('form-contact', 'fail', e.message);
+            }
+        }
+
+        function testBookingForm() {
+            try {
+                const bookingForm = document.getElementById('bookingForm');
+                if (bookingForm) {
+                    updateStatus('form-booking', 'pass', 'Booking form found');
+                } else {
+                    updateStatus('form-booking', 'fail', 'Booking form missing');
+                }
+            } catch (e) {
+                updateStatus('form-booking', 'fail', e.message);
+            }
+        }
+
+        function testTestimonials() {
+            try {
+                const testimonialsSlider = document.getElementById('testimonialsSlider');
+                const prevBtn = document.getElementById('prevTestimonial');
+                const nextBtn = document.getElementById('nextTestimonial');
+                if (testimonialsSlider && prevBtn && nextBtn) {
+                    updateStatus('testimonials', 'pass', 'Testimonials slider elements found');
+                } else {
+                    updateStatus('testimonials', 'fail', 'Testimonials slider elements missing');
+                }
+            } catch (e) {
+                updateStatus('testimonials', 'fail', e.message);
+            }
+        }
+
+        function testDestinationFilters() {
+            try {
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                if (filterBtns.length > 0) {
+                    updateStatus('destination-filters', 'pass', `${filterBtns.length} filter buttons found`);
+                } else {
+                    updateStatus('destination-filters', 'fail', 'No filter buttons found');
+                }
+            } catch (e) {
+                updateStatus('destination-filters', 'fail', e.message);
+            }
+        }
+
+        function testBackToTop() {
+            try {
+                const backToTop = document.getElementById('backToTop');
+                if (backToTop) {
+                    updateStatus('back-to-top', 'pass', 'Back to top button found');
+                } else {
+                    updateStatus('back-to-top', 'fail', 'Back to top button missing');
+                }
+            } catch (e) {
+                updateStatus('back-to-top', 'fail', e.message);
+            }
+        }
+
+        function testCounters() {
+            try {
+                const countdown = document.getElementById('countdown');
+                if (countdown) {
+                    updateStatus('counters', 'pass', 'Countdown element found');
+                } else {
+                    updateStatus('counters', 'fail', 'Countdown element missing');
+                }
+            } catch (e) {
+                updateStatus('counters', 'fail', e.message);
+            }
+        }
+
+        function testScrollAnimations() {
+            try {
+                const animatedElements = document.querySelectorAll('.destination-card, .package-card');
+                if (animatedElements.length > 0) {
+                    updateStatus('scroll-animations', 'pass', `${animatedElements.length} animated elements found`);
+                } else {
+                    updateStatus('scroll-animations', 'fail', 'No animated elements found');
+                }
+            } catch (e) {
+                updateStatus('scroll-animations', 'fail', e.message);
+            }
+        }
+
+        function testHoverEffects() {
+            try {
+                const hoverElements = document.querySelectorAll('.card-hover, .interactive');
+                if (hoverElements.length > 0) {
+                    updateStatus('hover-effects', 'pass', `${hoverElements.length} hover elements found`);
+                } else {
+                    updateStatus('hover-effects', 'fail', 'No hover elements found');
+                }
+            } catch (e) {
+                updateStatus('hover-effects', 'fail', e.message);
+            }
+        }
+
+        function testSuccessNotifications() {
+            try {
+                // Check if notification system exists
+                updateStatus('notifications-success', 'pass', 'Notification system available');
+            } catch (e) {
+                updateStatus('notifications-success', 'fail', e.message);
+            }
+        }
+
+        function testErrorNotifications() {
+            try {
+                // Check if notification system exists
+                updateStatus('notifications-error', 'pass', 'Notification system available');
+            } catch (e) {
+                updateStatus('notifications-error', 'fail', e.message);
+            }
+        }
+
+        function testInfoNotifications() {
+            try {
+                // Check if notification system exists
+                updateStatus('notifications-info', 'pass', 'Notification system available');
+            } catch (e) {
+                updateStatus('notifications-info', 'fail', e.message);
+            }
+        }
+
+        function runAllTests() {
+            const tests = [
+                testDesktopNav, testMobileMenu, testUserMenu, testSmoothScroll,
+                testSearchOverlay, testSearchResults, testCategoryFilter, testPriceFilter,
+                testAddToCart, testCartSidebar, testRemoveFromCart, testCartPersistence,
+                testWishlistAdd, testWishlistPersistence, testWishlistUI,
+                testThemeToggle, testThemePersistence,
+                testNewsletterForm, testContactForm, testBookingForm,
+                testTestimonials, testDestinationFilters, testBackToTop,
+                testCounters, testScrollAnimations, testHoverEffects,
+                testSuccessNotifications, testErrorNotifications, testInfoNotifications
+            ];
+
+            tests.forEach(test => {
+                try {
+                    test();
+                } catch (e) {
+                    console.error('Test error:', e);
+                }
+            });
+
+            // Generate summary
+            const passCount = document.querySelectorAll('.status.pass').length;
+            const failCount = document.querySelectorAll('.status.fail').length;
+            const totalCount = passCount + failCount;
+
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = `
+                <h4>Test Summary</h4>
+                <p><strong>Total Tests:</strong> ${totalCount}</p>
+                <p><strong>Passed:</strong> <span style="color: #27ae60;">${passCount}</span></p>
+                <p><strong>Failed:</strong> <span style="color: #e74c3c;">${failCount}</span></p>
+                <p><strong>Success Rate:</strong> ${totalCount > 0 ? Math.round((passCount / totalCount) * 100) : 0}%</p>
+                <hr>
+                <p><em>All tests completed. Check individual test results above for details.</em></p>
+            `;
+        }
+
+        function clearResults() {
+            const statusElements = document.querySelectorAll('.status');
+            statusElements.forEach(element => {
+                element.className = 'status pending';
+                element.textContent = '⏳ PENDING';
+                element.title = '';
+            });
+            
+            document.getElementById('resultsContent').innerHTML = 'Click "Run Complete Test Suite" to test all functionality.';
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>

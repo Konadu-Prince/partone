@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Wanderlust Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="wanderlust-styles.css">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-dark">Wanderlust</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html#blog" class="text-dark hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Article Header -->
+        <article class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="relative">
+                <img src="travel-assets/budget-travel.jpg" alt="Budget Travel Tips" class="w-full h-64 md:h-96 object-cover">
+                <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="fas fa-tag mr-1"></i>Travel Tips
+                </div>
+            </div>
+            
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-6 text-sm text-gray-500">
+                    <div class="flex items-center space-x-4">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>March 15, 2024</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>5 min read</span>
+                        </span>
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-user"></i>
+                            <span>Sarah Johnson</span>
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 text-gray-400 hover:text-red-500 transition-colors duration-300">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-blue-500 transition-colors duration-300">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <h1 class="text-4xl font-bold text-dark mb-6 leading-tight">
+                    Budget Travel Tips: How to See the World for Less
+                </h1>
+
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Traveling doesn't have to break the bank. With the right strategies and mindset, you can explore amazing destinations while keeping your budget intact. Here are our top tips for budget-conscious travelers.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">1. Plan Your Trip During Off-Season</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        One of the easiest ways to save money on travel is to avoid peak tourist seasons. Not only will you find cheaper flights and accommodations, but you'll also experience destinations with fewer crowds. Research the best off-season times for your desired destinations.
+                    </p>
+
+                    <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl mb-8">
+                        <h3 class="text-lg font-semibold text-dark mb-3">
+                            <i class="fas fa-lightbulb text-accent mr-2"></i>Pro Tip
+                        </h3>
+                        <p class="text-gray-700">
+                            Many destinations have shoulder seasons that offer great weather and lower prices. For example, visit Europe in late spring or early fall for the best of both worlds.
+                        </p>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">2. Use Budget Airlines and Alternative Airports</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Budget airlines can offer significant savings, especially for short-haul flights. Be flexible with your dates and consider flying into alternative airports near your destination. Sometimes a short train or bus ride can save you hundreds of dollars.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">3. Stay in Hostels or Alternative Accommodations</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Hostels aren't just for backpackers anymore. Many modern hostels offer private rooms, great amenities, and a social atmosphere. Consider alternatives like Airbnb, guesthouses, or even house-sitting opportunities.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">4. Cook Your Own Meals</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Eating out for every meal can quickly drain your budget. Choose accommodations with kitchen facilities and shop at local markets. This not only saves money but also gives you a more authentic experience of local life.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">5. Use Public Transportation</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Public transportation is often the most cost-effective way to get around. Many cities offer tourist passes that provide unlimited travel for a set period. Walking and cycling are also great free options for exploring.
+                    </p>
+
+                    <div class="bg-gradient-to-r from-success/10 to-primary/10 p-6 rounded-xl mb-8">
+                        <h3 class="text-lg font-semibold text-dark mb-3">
+                            <i class="fas fa-chart-line text-success mr-2"></i>Budget Breakdown Example
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="font-semibold">Accommodation: $30/night</p>
+                                <p class="font-semibold">Food: $20/day</p>
+                                <p class="font-semibold">Transport: $15/day</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Activities: $25/day</p>
+                                <p class="font-semibold">Miscellaneous: $10/day</p>
+                                <p class="font-semibold text-primary">Total: $100/day</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">6. Take Advantage of Free Activities</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Many destinations offer free walking tours, museum days, and outdoor activities. Research free attractions and events before you go. Parks, beaches, and hiking trails are often free and provide some of the best experiences.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">7. Travel with Friends</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Splitting costs with travel companions can significantly reduce your expenses. Accommodation, transportation, and even food costs can be shared, making travel more affordable for everyone.
+                    </p>
+
+                    <div class="bg-gradient-to-r from-secondary/10 to-accent/10 p-6 rounded-xl mb-8">
+                        <h3 class="text-lg font-semibold text-dark mb-3">
+                            <i class="fas fa-exclamation-triangle text-secondary mr-2"></i>Important Reminder
+                        </h3>
+                        <p class="text-gray-700">
+                            Always have a small emergency fund set aside for unexpected expenses. Travel insurance is also a wise investment that can save you money in the long run.
+                        </p>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-dark mb-4 mt-8">Conclusion</h2>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Budget travel is all about making smart choices and being flexible. With these tips, you can explore the world without compromising on experiences. Remember, the best travel memories often come from the unexpected adventures, not the expensive hotels.
+                    </p>
+                </div>
+
+                <!-- Author Bio -->
+                <div class="border-t border-gray-200 pt-8 mt-8">
+                    <div class="flex items-start space-x-4">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" alt="Sarah Johnson" class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="text-lg font-semibold text-dark">Sarah Johnson</h3>
+                            <p class="text-gray-600 mb-2">Travel Writer & Budget Travel Expert</p>
+                            <p class="text-sm text-gray-500">
+                                Sarah has been traveling the world on a budget for over 8 years. She's visited 45 countries and shares her tips to help others explore more for less.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Articles -->
+                <div class="border-t border-gray-200 pt-8 mt-8">
+                    <h3 class="text-2xl font-bold text-dark mb-6">Related Articles</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <img src="travel-assets/hidden-gems.jpg" alt="Hidden Gems" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <h4 class="text-lg font-semibold text-dark mb-2">Hidden Gems: Off-the-Beaten-Path Destinations</h4>
+                            <p class="text-gray-600 text-sm">Discover amazing places that most tourists never see...</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <img src="travel-assets/travel-tips.jpg" alt="Travel Tips" class="w-full h-32 object-cover rounded-lg mb-4">
+                            <h4 class="text-lg font-semibold text-dark mb-2">The Ultimate Budget Travel Guide</h4>
+                            <p class="text-gray-600 text-sm">Everything you need to know about traveling on a budget...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="bg-gradient-to-r from-primary to-secondary py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Stay Updated with Travel Tips</h2>
+            <p class="text-xl text-white/90 mb-8">Get the latest travel advice and destination guides delivered to your inbox.</p>
+            <form class="max-w-md mx-auto flex gap-4">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+                <button type="submit" class="btn-primary px-6 py-3 bg-white text-primary font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="wanderlust-app.js"></script>
+</body>
+</html>
