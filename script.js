@@ -140,7 +140,7 @@ function updateCart() {
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
             <div class="cart-item-image">
-                <img src="road.jpg" alt="${item.name}">
+                <img src="images/hero-bg.jpg" alt="${item.name}">
             </div>
             <div class="cart-item-details">
                 <div class="cart-item-name">${item.name}</div>
