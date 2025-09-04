@@ -27,14 +27,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/wanderlust-travel.git"
+    "url": "git+https://github.com/yourusername/wanderlust-travel.git"
   },
   "bugs": {
     "url": "https://github.com/yourusername/wanderlust-travel/issues"
   },
   "homepage": "https://yourusername.github.io/wanderlust-travel",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "tailwindcss": "^4.1.12"
   },
   "engines": {
     "node": ">=14.0.0",

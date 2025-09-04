@@ -5,391 +5,470 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wanderlust Travel - Book Your Dream Vacation</title>
-    <link rel="stylesheet" href="part_one.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#e74c3c',
+                        accent: '#f39c12',
+                        success: '#27ae60',
+                        dark: '#2c3e50',
+                        light: '#ecf0f1',
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Stripe.js for payments -->
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body>
+<body class="font-poppins bg-white">
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-globe-americas"></i>
-                <span>Wanderlust</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#destinations" class="nav-link">Destinations</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#packages" class="nav-link">Packages</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#deals" class="nav-link">Deals</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="nav-actions">
-                <button class="search-toggle" id="searchToggle">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="user-menu-toggle" id="userMenuToggle">
-                    <i class="fas fa-user"></i>
-                </button>
-                <div class="cart-icon" id="cartIcon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count" id="cartCount">0</span>
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-globe-americas text-2xl text-primary"></i>
+                    <span class="text-xl font-bold text-dark">Wanderlust</span>
                 </div>
-            </div>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Home</a>
+                    <a href="#destinations" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Destinations</a>
+                    <a href="#packages" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Packages</a>
+                    <a href="#deals" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Deals</a>
+                    <a href="#blog" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Blog</a>
+                    <a href="#about" class="text-dark hover:text-primary transition-colors duration-300 font-medium">About</a>
+                    <a href="#contact" class="text-dark hover:text-primary transition-colors duration-300 font-medium">Contact</a>
+                </div>
+                
+                <!-- Navigation Actions -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="themeToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-moon text-lg"></i>
+                    </button>
+                    <button id="userMenuToggle" class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    <div id="cartIcon" class="relative p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-full transition-all duration-300 cursor-pointer">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="p-2 text-dark hover:text-primary hover:bg-gray-100 rounded-md transition-all duration-300">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- User Menu Dropdown -->
-    <div class="user-menu" id="userMenu">
-        <div class="user-menu-header">
-            <i class="fas fa-user-circle"></i>
-            <span>Welcome, Traveler!</span>
+    <div id="userMenu" class="hidden absolute top-16 right-4 bg-white rounded-xl shadow-2xl border border-gray-200 min-w-72 z-50">
+        <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 rounded-t-xl text-center">
+            <i class="fas fa-user-circle text-4xl mb-3"></i>
+            <span class="text-lg font-semibold">Welcome, Traveler!</span>
         </div>
-        <ul class="user-menu-items">
-            <li><a href="#" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li><a href="#" class="register-btn"><i class="fas fa-user-plus"></i> Register</a></li>
-            <li><a href="#" class="my-bookings"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
-            <li><a href="#" class="wishlist"><i class="fas fa-heart"></i> Wishlist</a></li>
-            <li><a href="#" class="premium-upgrade"><i class="fas fa-crown"></i> Upgrade to Premium</a></li>
+        <ul class="py-4">
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-sign-in-alt w-5"></i> <span>Login</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-user-plus w-5"></i> <span>Register</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-calendar-check w-5"></i> <span>My Bookings</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-heart w-5"></i> <span>Wishlist</span></a></li>
+            <li><a href="#" class="flex items-center space-x-3 px-6 py-3 text-dark hover:bg-gray-50 hover:text-primary transition-all duration-300"><i class="fas fa-crown w-5"></i> <span>Upgrade to Premium</span></a></li>
         </ul>
     </div>
 
     <!-- Shopping Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Your Travel Cart</h3>
-            <button class="cart-close" id="cartClose">
-                <i class="fas fa-times"></i>
-            </button>
+    <div id="cartSidebar" class="fixed top-0 right-0 w-96 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold">Your Travel Cart</h3>
+                <button id="cartClose" class="p-2 hover:bg-white/20 rounded-full transition-all duration-300">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
         </div>
-        <div class="cart-items" id="cartItems">
+        <div id="cartItems" class="p-6 max-h-96 overflow-y-auto">
             <!-- Cart items will be populated here -->
         </div>
-        <div class="cart-footer">
-            <div class="cart-total">
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-gray-200">
+            <div class="flex justify-between items-center mb-4 text-lg font-bold">
                 <span>Total:</span>
-                <span class="total-amount" id="cartTotal">$0.00</span>
+                <span id="cartTotal" class="text-success text-xl">$0.00</span>
             </div>
-            <button class="btn btn-primary checkout-btn" id="checkoutBtn">
-                <i class="fas fa-credit-card"></i> Proceed to Checkout
+            <button id="checkoutBtn" class="w-full bg-gradient-to-r from-success to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                <i class="fas fa-credit-card mr-2"></i> Proceed to Checkout
             </button>
         </div>
     </div>
 
     <!-- Search Overlay -->
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-container">
-            <div class="search-header">
-                <h3>Search Destinations</h3>
-                <button class="search-close" id="searchClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="search-input-group">
-                <input type="text" id="searchInput" placeholder="Search for destinations, activities, or experiences...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-            <div class="search-filters">
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                    <option value="beach">Beach</option>
-                    <option value="mountain">Mountain</option>
-                    <option value="city">City</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="culture">Culture</option>
-                </select>
-                <select id="priceFilter">
-                    <option value="">All Prices</option>
-                    <option value="budget">Budget ($)</option>
-                    <option value="mid">Mid-Range ($$)</option>
-                    <option value="luxury">Luxury ($$$)</option>
-                </select>
-            </div>
-            <div class="search-results" id="searchResults">
-                <!-- Search results will be populated here -->
+    <div id="searchOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl mx-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-dark">Search Destinations</h3>
+                    <button id="searchClose" class="p-2 text-gray-500 hover:text-secondary hover:bg-gray-100 rounded-full transition-all duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex space-x-3 mb-6">
+                    <input type="text" id="searchInput" placeholder="Search for destinations, activities, or experiences..." class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                    <button class="px-6 py-3 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-search mr-2"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <select id="categoryFilter" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                        <option value="">All Categories</option>
+                        <option value="beach">Beach</option>
+                        <option value="mountain">Mountain</option>
+                        <option value="city">City</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="culture">Culture</option>
+                    </select>
+                    <select id="priceFilter" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-300">
+                        <option value="">All Prices</option>
+                        <option value="budget">Budget ($)</option>
+                        <option value="mid">Mid-Range ($$)</option>
+                        <option value="luxury">Luxury ($$$)</option>
+                    </select>
+                </div>
+                <div id="searchResults" class="border-t border-gray-200 pt-4 max-h-64 overflow-y-auto">
+                    <!-- Search results will be populated here -->
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-video-container">
-                <video autoplay muted loop class="hero-video">
+    <section id="home" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="hidden">
+                <video autoplay muted loop class="w-full h-full object-cover">
                     <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
                 </video>
-                <div class="hero-video-overlay"></div>
             </div>
-            <div class="hero-image-fallback">
-                <img src="images/hero-bg.jpg" alt="Travel Background" class="hero-bg-img">
-            </div>
+            <img src="images/hero-bg.jpg" alt="Travel Background" class="w-full h-full object-cover brightness-75">
         </div>
-        <div class="hero-content">
-            <h1 class="hero-title">Book Your Dream Vacation Today</h1>
-            <p class="hero-subtitle">Exclusive deals, instant booking, and 24/7 support</p>
-            <div class="hero-search">
-                <div class="hero-search-box">
-                    <input type="text" placeholder="Where do you want to go?">
-                    <button class="hero-search-btn">
+        
+        <!-- Hero Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-dark/60 to-primary/50 z-10"></div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-20 max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
+                Book Your Dream Vacation Today
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-95 animate-fade-in-up animation-delay-200">
+                Exclusive deals, instant booking, and 24/7 support
+            </p>
+            
+            <!-- Hero Search -->
+            <div class="mb-8 animate-fade-in-up animation-delay-300">
+                <div class="flex max-w-2xl mx-auto bg-white/95 backdrop-blur-md rounded-full overflow-hidden shadow-2xl">
+                    <input type="text" placeholder="Where do you want to go?" class="flex-1 px-6 py-4 text-lg border-none outline-none bg-transparent text-dark">
+                    <button class="px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold hover:shadow-lg transition-all duration-300 flex items-center space-x-2">
                         <i class="fas fa-search"></i>
-                        Search & Book
+                        <span>Search & Book</span>
                     </button>
                 </div>
             </div>
-            <div class="hero-buttons">
-                <button class="btn btn-primary">View Deals</button>
-                <button class="btn btn-secondary">Book Now</button>
+            
+            <!-- Hero Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in-up animation-delay-400">
+                <button class="px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    View Deals
+                </button>
+                <button class="px-8 py-4 bg-gradient-to-r from-secondary to-red-600 text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    Book Now
+                </button>
             </div>
-            <div class="hero-features">
-                <div class="hero-feature">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Secure Booking</span>
+            
+            <!-- Hero Features -->
+            <div class="flex flex-wrap justify-center gap-6 animate-fade-in-up animation-delay-500">
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-shield-alt text-accent text-xl"></i>
+                    <span class="font-medium">Secure Booking</span>
                 </div>
-                <div class="hero-feature">
-                    <i class="fas fa-clock"></i>
-                    <span>Instant Confirmation</span>
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-clock text-accent text-xl"></i>
+                    <span class="font-medium">Instant Confirmation</span>
                 </div>
-                <div class="hero-feature">
-                    <i class="fas fa-headset"></i>
-                    <span>24/7 Support</span>
+                <div class="flex items-center space-x-3 bg-white/15 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i class="fas fa-headset text-accent text-xl"></i>
+                    <span class="font-medium">24/7 Support</span>
                 </div>
             </div>
         </div>
-        <div class="hero-overlay"></div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce-slow">
+            <div class="w-6 h-6 border-2 border-white border-t-0 border-l-0 transform rotate-45"></div>
         </div>
     </section>
 
     <!-- Special Deals Banner -->
-    <section class="deals-banner">
-        <div class="container">
-            <div class="deals-content">
-                <h2>🔥 Limited Time Offers!</h2>
-                <p>Book now and save up to 40% on selected destinations</p>
-                <div class="countdown" id="countdown">
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="days">00</span>
-                        <span class="countdown-label">Days</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="hours">00</span>
-                        <span class="countdown-label">Hours</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="minutes">00</span>
-                        <span class="countdown-label">Minutes</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="seconds">00</span>
-                        <span class="countdown-label">Seconds</span>
-                    </div>
+    <section class="bg-gradient-to-r from-secondary to-red-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">🔥 Limited Time Offers!</h2>
+            <p class="text-xl mb-12 opacity-95">Book now and save up to 40% on selected destinations</p>
+            
+            <!-- Countdown Timer -->
+            <div class="flex flex-wrap justify-center gap-6" id="countdown">
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="days" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Days</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="hours" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Hours</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="minutes" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Minutes</span>
+                </div>
+                <div class="bg-white/15 backdrop-blur-md px-8 py-6 rounded-2xl min-w-32">
+                    <span id="seconds" class="block text-5xl font-bold">00</span>
+                    <span class="text-lg opacity-90 uppercase tracking-wider">Seconds</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Quick Stats Section -->
-    <section class="quick-stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <div class="stat-content">
-                        <span class="stat-number" data-target="50000">0</span>
-                        <span class="stat-label">Happy Travelers</span>
-                    </div>
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-users text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="50000">0</div>
+                    <div class="stat-label text-lg text-gray-600">Happy Travelers</div>
                 </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe"></i>
-                    <div class="stat-content">
-                        <span class="stat-number" data-target="150">0</span>
-                        <span class="stat-label">Countries</span>
-                    </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-globe text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="150">0</div>
+                    <div class="stat-label text-lg text-gray-600">Countries</div>
                 </div>
-                <div class="stat-item">
-                    <i class="fas fa-award"></i>
-                    <div class="stat-content">
-                        <span class="stat-number" data-target="25">0</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-award text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="25">0</div>
+                    <div class="stat-label text-lg text-gray-600">Years Experience</div>
                 </div>
-                <div class="stat-item">
-                    <i class="fas fa-star"></i>
-                    <div class="stat-content">
-                        <span class="stat-number" data-target="98">0</span>
-                        <span class="stat-label">% Satisfaction</span>
-                    </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+                    <i class="fas fa-star text-5xl text-primary mb-4"></i>
+                    <div class="stat-number text-4xl font-bold text-dark mb-2" data-target="98">0</div>
+                    <div class="stat-label text-lg text-gray-600">% Satisfaction</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Destinations Section -->
-    <section id="destinations" class="destinations">
-        <div class="container">
-            <h2 class="section-title">Popular Destinations</h2>
-            <div class="destinations-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="beach">Beach</button>
-                <button class="filter-btn" data-filter="mountain">Mountain</button>
-                <button class="filter-btn" data-filter="city">City</button>
-                <button class="filter-btn" data-filter="adventure">Adventure</button>
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center text-dark mb-16 relative">
+                Popular Destinations
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </h2>
+            
+            <!-- Destination Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300 active" data-filter="all">All</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="beach">Beach</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="mountain">Mountain</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="city">City</button>
+                <button class="filter-btn px-6 py-3 border-2 border-primary bg-white text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300" data-filter="adventure">Adventure</button>
             </div>
-            <div class="destinations-grid">
-                <div class="destination-card" data-category="mountain city">
-                    <div class="destination-image">
-                        <img src="images/canada-mountain.jpg" alt="Canada" class="destination-img">
-                        <div class="destination-badge">Popular</div>
-                        <div class="destination-overlay">
-                            <button class="btn btn-outline">View Details</button>
-                        </div>
-                        <div class="destination-price">
-                            <span class="price-amount">From $899</span>
-                            <span class="price-discount">Save $200</span>
+            
+            <!-- Destinations Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Canada Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="mountain city">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="images/canada-mountain.jpg" alt="Canada" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">Popular</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $899</span>
+                            <span class="block text-sm text-success">Save $200</span>
                         </div>
                     </div>
-                    <div class="destination-content">
-                        <h3>Canada</h3>
-                        <p class="destination-capital">Capital: Ottawa</p>
-                        <p class="destination-description">Experience the stunning landscapes, vibrant cities, and rich culture of the Great White North.</p>
-                        <div class="destination-features">
-                            <span class="feature"><i class="fas fa-mountain"></i> Nature</span>
-                            <span class="feature"><i class="fas fa-city"></i> Cities</span>
-                            <span class="feature"><i class="fas fa-snowflake"></i> Winter Sports</span>
-                        </div>
-                        <div class="destination-meta">
-                            <span class="price">From $899</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="rating-text">(4.8)</span>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Canada</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Ottawa</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Experience the stunning landscapes, vibrant cities, and rich culture of the Great White North.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-mountain text-primary"></i>
+                                <span>Nature</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-city text-primary"></i>
+                                <span>Cities</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-snowflake text-primary"></i>
+                                <span>Winter Sports</span>
                             </span>
                         </div>
-                        <div class="destination-actions">
-                            <button class="btn btn-outline">Learn More</button>
-                            <button class="btn btn-primary add-to-cart" data-id="canada" data-price="899" data-name="Canada Adventure">
-                                <i class="fas fa-cart-plus"></i> Book Now
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $899</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.8)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="canada" data-price="899" data-name="Canada Adventure">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="destination-card" data-category="beach culture">
-                    <div class="destination-image">
-                        <img src="images/ghana-beach.jpg" alt="Ghana" class="destination-img">
-                        <div class="destination-badge">Trending</div>
-                        <div class="destination-overlay">
-                            <button class="btn btn-outline">View Details</button>
-                        </div>
-                        <div class="destination-price">
-                            <span class="price-amount">From $699</span>
-                            <span class="price-discount">Save $150</span>
+                <!-- Ghana Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="beach culture">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="images/ghana-beach.jpg" alt="Ghana" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">Trending</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $699</span>
+                            <span class="block text-sm text-success">Save $150</span>
                         </div>
                     </div>
-                    <div class="destination-content">
-                        <h3>Ghana</h3>
-                        <p class="destination-capital">Capital: Accra</p>
-                        <p class="destination-description">Discover the rich history, beautiful beaches, and warm hospitality of West Africa.</p>
-                        <div class="destination-features">
-                            <span class="feature"><i class="fas fa-umbrella-beach"></i> Beaches</span>
-                            <span class="feature"><i class="fas fa-history"></i> History</span>
-                            <span class="feature"><i class="fas fa-music"></i> Culture</span>
-                        </div>
-                        <div class="destination-meta">
-                            <span class="price">From $699</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="rating-text">(4.6)</span>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Ghana</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Accra</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Discover the rich history, beautiful beaches, and warm hospitality of West Africa.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-umbrella-beach text-primary"></i>
+                                <span>Beaches</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-history text-primary"></i>
+                                <span>History</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-music text-primary"></i>
+                                <span>Culture</span>
                             </span>
                         </div>
-                        <div class="destination-actions">
-                            <button class="btn btn-outline">Learn More</button>
-                            <button class="btn btn-primary add-to-cart" data-id="ghana" data-price="699" data-name="Ghana Experience">
-                                <i class="fas fa-cart-plus"></i> Book Now
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $699</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star-half-alt text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.6)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="ghana" data-price="699" data-name="Ghana Experience">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="destination-card" data-category="adventure nature">
-                    <div class="destination-image">
-                        <img src="images/kenya-safari.jpg" alt="Kenya" class="destination-img">
-                        <div class="destination-badge">New</div>
-                        <div class="destination-overlay">
-                            <button class="btn btn-outline">View Details</button>
-                        </div>
-                        <div class="destination-price">
-                            <span class="price-amount">From $1299</span>
-                            <span class="price-discount">Save $300</span>
+                <!-- Kenya Destination -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-4" data-category="adventure nature">
+                    <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                        <img src="images/kenya-safari.jpg" alt="Kenya" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-semibold">New</div>
+                        <div class="absolute bottom-4 right-4 bg-black/80 text-white px-4 py-3 rounded-xl text-center">
+                            <span class="block text-lg font-bold text-accent">From $1299</span>
+                            <span class="block text-sm text-success">Save $300</span>
                         </div>
                     </div>
-                    <div class="destination-content">
-                        <h3>Kenya</h3>
-                        <p class="destination-capital">Capital: Nairobi</p>
-                        <p class="destination-description">Embark on an unforgettable safari adventure in the heart of East Africa.</p>
-                        <div class="destination-features">
-                            <span class="feature"><i class="fas fa-lion"></i> Wildlife</span>
-                            <span class="feature"><i class="fas fa-camera"></i> Photography</span>
-                            <span class="feature"><i class="fas fa-tree"></i> Nature</span>
-                        </div>
-                        <div class="destination-meta">
-                            <span class="price">From $1299</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="rating-text">(4.9)</span>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-dark mb-2">Kenya</h3>
+                        <p class="text-primary font-semibold text-sm uppercase tracking-wider mb-3">Capital: Nairobi</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Embark on an unforgettable safari adventure in the heart of East Africa.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-lion text-primary"></i>
+                                <span>Wildlife</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-camera text-primary"></i>
+                                <span>Photography</span>
+                            </span>
+                            <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-dark flex items-center space-x-2">
+                                <i class="fas fa-tree text-primary"></i>
+                                <span>Nature</span>
                             </span>
                         </div>
-                        <div class="destination-actions">
-                            <button class="btn btn-outline">Learn More</button>
-                            <button class="btn btn-primary add-to-cart" data-id="kenya" data-price="1299" data-name="Kenya Safari">
-                                <i class="fas fa-cart-plus"></i> Book Now
+                        
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-xl font-bold text-success">From $1299</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <i class="fas fa-star text-accent"></i>
+                                <span class="text-sm text-gray-500 ml-2 font-semibold">(4.9)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300">
+                                Learn More
+                            </button>
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 add-to-cart" data-id="kenya" data-price="1299" data-name="Kenya Safari">
+                                <i class="fas fa-cart-plus mr-2"></i> Book Now
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="destinations-cta">
-                <button class="btn btn-primary">View All Destinations</button>
+            
+            <!-- View All CTA -->
+            <div class="text-center">
+                <button class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    View All Destinations
+                </button>
             </div>
         </div>
     </section>
