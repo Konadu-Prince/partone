@@ -67,14 +67,14 @@ A professional, responsive travel and tourism website built with modern web tech
 ## 📁 Project Structure
 
 ```
-partone/
-├── index.html          # Main HTML file with complete website structure
-├── part_one.css        # Comprehensive CSS styles and responsive design
-├── script.js           # JavaScript functionality and interactions
-├── README.md           # Project documentation
-├── car.png            # Canada destination image
-├── woman.png          # Ghana destination image
-└── road.jpg           # Hero background and Kenya destination image
+wanderlust-travel/
+├── wanderlust-travel.html      # Main HTML file with complete website structure
+├── wanderlust-styles.css       # CSS file with Tailwind CSS imports
+├── wanderlust-app.js           # JavaScript functionality and interactions
+├── travel-assets/              # Professional travel image assets
+├── wanderlust-tailwind.config.js # Tailwind CSS configuration
+├── README.md                   # Project documentation
+└── package.json                # Node.js package configuration
 ```
 
 ## 🚀 Getting Started
@@ -88,17 +88,20 @@ partone/
 1. **Clone or Download** the project files to your local machine
 
 2. **Open the Project**:
-   - Option 1: Open `index.html` directly in your browser
+   - Option 1: Open `wanderlust-travel.html` directly in your browser
    - Option 2: Use a local web server for development
 
 3. **For Local Development** (recommended):
    ```bash
    # Using Python 3
-   python -m http.server 8000
+   python3 -m http.server 8080
    
    # Using Node.js (if you have http-server installed)
-   npx http-server
+   npm start
    
+   # Or manually
+   npx http-server -p 8080 -o wanderlust-travel.html
+```
    # Using PHP
    php -S localhost:8000
    ```

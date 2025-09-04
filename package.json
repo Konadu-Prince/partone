@@ -2,11 +2,11 @@
   "name": "wanderlust-travel",
   "version": "1.0.0",
   "description": "A modern, responsive travel and tourism website built with HTML5, CSS3, and JavaScript",
-  "main": "index.html",
+  "main": "wanderlust-travel.html",
   "scripts": {
-    "start": "http-server -p 8000 -o",
-    "dev": "http-server -p 8000 -o -c-1",
-    "serve": "python -m http.server 8000",
+    "start": "http-server -p 8080 -o wanderlust-travel.html",
+    "dev": "http-server -p 8080 -o -c-1 wanderlust-travel.html",
+    "serve": "python3 -m http.server 8080",
     "build": "echo 'No build process needed for static site'",
     "test": "echo 'No tests specified'",
     "lint": "echo 'No linting configured'"
