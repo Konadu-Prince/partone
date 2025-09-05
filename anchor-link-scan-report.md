@@ -211,3 +211,4 @@ and <a href="privacy-policy.html" class="text-primary hover:text-secondary">Priv
 **📝 Report Generated**: September 4, 2025  
 **🔍 Scan Method**: Automated grep search across all HTML files  
 **📁 Files Scanned**: All HTML files in root and dist directories
+

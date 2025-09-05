@@ -186,3 +186,4 @@ transition-all, duration-300, ease-in-out
 **🎉 Congratulations! Your Wanderlust Travel website is now powered by Tailwind CSS!**
 
 **All your existing styles are preserved and enhanced with Tailwind's utility-first approach.**
+

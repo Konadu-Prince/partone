@@ -261,3 +261,4 @@ class CartModule {
 
 // Export for use in main app
 window.CartModule = CartModule;
+

@@ -254,3 +254,4 @@ class ThemeModule {
 
 // Export for use in main app
 window.ThemeModule = ThemeModule;
+

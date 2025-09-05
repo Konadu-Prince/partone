@@ -318,3 +318,4 @@ const AppConfig = {
 ---
 
 **Built with ❤️ using Waterfall Methodology for maintainable, scalable web development.**
+
