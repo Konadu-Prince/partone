@@ -197,6 +197,95 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Search functionality event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const searchToggle = document.getElementById('searchToggle');
+    const searchOverlayClose = document.getElementById('searchOverlayClose');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const suggestionTags = document.querySelectorAll('.suggestion-tag');
+    
+    // Open search overlay
+    if (searchToggle) {
+        searchToggle.addEventListener('click', openSearchOverlay);
+    }
+    
+    // Close search overlay
+    if (searchOverlayClose) {
+        searchOverlayClose.addEventListener('click', closeSearchOverlay);
+    }
+    
+    // Search input functionality
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+            if (query.length > 2) {
+                performSearch(query);
+            } else {
+                // Show suggestions when input is empty or short
+                const searchResults = document.getElementById('searchResults');
+                if (searchResults) {
+                    searchResults.innerHTML = `
+                        <div class="search-suggestions">
+                            <h4 class="text-lg font-semibold text-white mb-4">Popular Destinations</h4>
+                            <div class="suggestion-tags">
+                                <span class="suggestion-tag" data-search="canada">Canada</span>
+                                <span class="suggestion-tag" data-search="ghana">Ghana</span>
+                                <span class="suggestion-tag" data-search="kenya">Kenya</span>
+                                <span class="suggestion-tag" data-search="japan">Japan</span>
+                                <span class="suggestion-tag" data-search="italy">Italy</span>
+                                <span class="suggestion-tag" data-search="france">France</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        });
+        
+        // Search on Enter key
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch(e.target.value);
+            }
+        });
+    }
+    
+    // Search button
+    if (searchButton) {
+        searchButton.addEventListener('click', () => {
+            if (searchInput) {
+                performSearch(searchInput.value);
+            }
+        });
+    }
+    
+    // Suggestion tags
+    suggestionTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const searchTerm = tag.getAttribute('data-search');
+            if (searchInput) {
+                searchInput.value = searchTerm;
+                performSearch(searchTerm);
+            }
+        });
+    });
+    
+    // Close search overlay when clicking outside
+    document.addEventListener('click', (e) => {
+        const searchOverlay = document.getElementById('searchOverlay');
+        if (searchOverlay && !searchOverlay.contains(e.target) && !searchToggle.contains(e.target)) {
+            closeSearchOverlay();
+        }
+    });
+    
+    // Close search overlay on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeSearchOverlay();
+        }
+    });
+});
+
 // Enhanced Add to Cart Functionality with Micro-interactions
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
@@ -1145,11 +1234,97 @@ function openPremiumModal() {
 }
 
 function openSearchOverlay() {
-    searchOverlay.classList.remove('hidden');
-    searchOverlay.classList.add('active');
-    searchInput.focus();
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchInput = document.getElementById('searchInput');
+    
+    if (searchOverlay) {
+        searchOverlay.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        
+        // Focus on search input
+        setTimeout(() => {
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }, 100);
+    }
+    
     // Close mobile menu
     closeMobileMenu();
+}
+
+function closeSearchOverlay() {
+    const searchOverlay = document.getElementById('searchOverlay');
+    
+    if (searchOverlay) {
+        searchOverlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
+function performSearch(query) {
+    if (!query.trim()) return;
+    
+    // Simulate search results
+    const destinations = [
+        { name: 'Canada Adventure', location: 'Canada', price: 899, image: 'travel-assets/canada-mountain.jpg' },
+        { name: 'Ghana Beach Paradise', location: 'Ghana', price: 599, image: 'travel-assets/ghana-beach.jpg' },
+        { name: 'Kenya Safari Experience', location: 'Kenya', price: 1299, image: 'travel-assets/kenya-safari.jpg' },
+        { name: 'Japan Cultural Tour', location: 'Japan', price: 1599, image: 'travel-assets/japan-temple.jpg' },
+        { name: 'Italy Food & Wine', location: 'Italy', price: 999, image: 'travel-assets/italy-vineyard.jpg' },
+        { name: 'France Art & History', location: 'France', price: 799, image: 'travel-assets/france-louvre.jpg' }
+    ];
+    
+    const results = destinations.filter(dest => 
+        dest.name.toLowerCase().includes(query.toLowerCase()) ||
+        dest.location.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    displaySearchResults(results);
+}
+
+function displaySearchResults(results) {
+    const searchResults = document.getElementById('searchResults');
+    
+    if (!searchResults) return;
+    
+    if (results.length === 0) {
+        searchResults.innerHTML = `
+            <div class="text-center py-8">
+                <i class="fas fa-search text-4xl text-white/50 mb-4"></i>
+                <p class="text-white/70">No destinations found matching your search.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const resultsHTML = results.map(dest => `
+        <div class="search-result-item bg-white/10 hover:bg-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300" onclick="navigateToDestination('${dest.location.toLowerCase()}')">
+            <div class="flex items-center space-x-4">
+                <img src="${dest.image}" alt="${dest.name}" class="w-16 h-16 rounded-lg object-cover">
+                <div class="flex-1">
+                    <h4 class="text-white font-semibold">${dest.name}</h4>
+                    <p class="text-white/70">${dest.location}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-primary font-bold">$${dest.price}</p>
+                    <p class="text-white/70 text-sm">per person</p>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    searchResults.innerHTML = `
+        <div class="space-y-4">
+            <h4 class="text-lg font-semibold text-white">Search Results (${results.length})</h4>
+            ${resultsHTML}
+        </div>
+    `;
+}
+
+function navigateToDestination(destination) {
+    closeSearchOverlay();
+    window.location.href = `destination-details.html?destination=${destination}`;
 }
 
 function openBlogPost(postId) {
