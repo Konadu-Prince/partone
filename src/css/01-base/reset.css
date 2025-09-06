@@ -1,0 +1,337 @@
+/* ========================================
+   LAYER 1: BASE - CSS RESET
+   Modern CSS Reset for Cross-Browser Compatibility
+   ======================================== */
+
+/* Box Sizing Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove Default Margins and Padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* HTML and Body Reset */
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--dark-800);
+  background-color: var(--light-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove List Styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove Default Link Styles */
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+/* Remove Default Button Styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/* Remove Default Input Styles */
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+/* Remove Default Table Styles */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove Default Image Styles */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove Default Form Styles */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/* Remove Default Heading Styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+/* Remove Default Paragraph Styles */
+p {
+  margin: 0;
+}
+
+/* Remove Default Blockquote Styles */
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}
+
+/* Remove Default HR Styles */
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--dark-200);
+  margin: var(--space-4) 0;
+}
+
+/* Remove Default Pre Styles */
+pre {
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Remove Default Code Styles */
+code,
+kbd,
+samp {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+/* Remove Default Small Styles */
+small {
+  font-size: 80%;
+}
+
+/* Remove Default Sub and Sup Styles */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Remove Default Details Styles */
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+
+/* Remove Default Dialog Styles */
+dialog {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+  padding: 1em;
+  margin: auto;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+/* Remove Default Progress Styles */
+progress {
+  vertical-align: baseline;
+}
+
+/* Remove Default Meter Styles */
+meter {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Remove Default Template Styles */
+template {
+  display: none;
+}
+
+/* Remove Default Hidden Styles */
+[hidden] {
+  display: none !important;
+}
+
+/* Focus Styles */
+:focus {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* Selection Styles */
+::selection {
+  background-color: var(--primary-200);
+  color: var(--primary-900);
+}
+
+::-moz-selection {
+  background-color: var(--primary-200);
+  color: var(--primary-900);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dark-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-400);
+}
+
+/* Print Styles */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+  
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+  
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+  
+  pre {
+    white-space: pre-wrap !important;
+  }
+  
+  blockquote {
+    border-left: 3px solid #ccc;
+    margin-left: 0;
+    padding-left: 1em;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}

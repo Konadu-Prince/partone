@@ -1,0 +1,371 @@
+/* ========================================
+   WANDERLUST TRAVEL - MAIN CSS
+   Waterfall Methodology - 8 Layer Architecture
+   ======================================== */
+
+/* Import Tailwind CSS */
+@import url('./tailwind.css');
+
+/* Layer 1: Base Foundation */
+@import url('./01-base/variables.css');
+@import url('./01-base/reset.css');
+
+/* Layer 2: Components */
+@import url('./02-components/buttons.css');
+@import url('./02-components/cards.css');
+@import url('./02-components/forms.css');
+@import url('./02-components/modals.css');
+@import url('./02-components/navigation.css');
+@import url('./02-components/animations.css');
+
+/* Layer 3: Layout */
+@import url('./03-layout/container.css');
+@import url('./03-layout/grid.css');
+@import url('./03-layout/flexbox.css');
+
+/* Layer 4: Utilities */
+@import url('./04-utilities/spacing.css');
+@import url('./04-utilities/typography.css');
+@import url('./04-utilities/colors.css');
+@import url('./04-utilities/display.css');
+
+/* Layer 5: Pages */
+@import url('./05-pages/home.css');
+@import url('./05-pages/destinations.css');
+@import url('./05-pages/blog.css');
+@import url('./05-pages/contact.css');
+
+/* Layer 6: Themes */
+@import url('./06-themes/dark.css');
+@import url('./06-themes/light.css');
+
+/* Layer 7: Responsive */
+@import url('./07-responsive/mobile.css');
+@import url('./07-responsive/tablet.css');
+@import url('./07-responsive/desktop.css');
+
+/* Layer 8: Print */
+@import url('./08-print/print.css');
+
+/* Layer 9: Quiz Platform */
+@import url('./09-quiz/quiz-engine.css');
+
+/* Layer 10: Gamification */
+@import url('./10-gamification/gamification.css');
+
+/* Layer 11: Analytics */
+@import url('./11-analytics/dashboard.css');
+
+/* ========================================
+   CUSTOM WANDERLUST STYLES
+   ======================================== */
+
+/* Global Styles */
+body {
+  font-family: var(--font-family-primary);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--light-50) 100%);
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../assets/images/hero-bg.jpg') center/cover;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Destination Cards */
+.destination-card {
+  background: white;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: var(--transition-all);
+  position: relative;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.destination-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: var(--transition-transform);
+}
+
+.destination-card:hover .destination-card-image {
+  transform: scale(1.05);
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  font-size: 4rem;
+  color: var(--primary-200);
+  font-family: serif;
+  line-height: 1;
+}
+
+/* Navigation */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--light-200);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.navbar-brand {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-600);
+  text-decoration: none;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.navbar-link {
+  color: var(--dark-600);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: var(--transition-colors);
+  position: relative;
+}
+
+.navbar-link:hover {
+  color: var(--primary-600);
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-500);
+  transition: var(--transition-all);
+}
+
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-modal);
+}
+
+.mobile-menu.active {
+  display: block;
+}
+
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  padding: var(--space-6);
+  transform: translateX(100%);
+  transition: var(--transition-transform);
+}
+
+.mobile-menu.active .mobile-menu-content {
+  transform: translateX(0);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: var(--space-4);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-weight-medium);
+  color: var(--dark-700);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--light-300);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  transition: var(--transition-all);
+  background: white;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+.form-input.error {
+  border-color: var(--secondary-500);
+  box-shadow: 0 0 0 3px var(--secondary-100);
+}
+
+.form-error {
+  color: var(--secondary-600);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-1);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out;
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+}
+
+/* Loading States */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-8) var(--space-4);
+  }
+  
+  .destination-card {
+    margin-bottom: var(--space-4);
+  }
+  
+  .navbar-nav {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}

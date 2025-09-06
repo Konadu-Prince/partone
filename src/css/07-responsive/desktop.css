@@ -1,0 +1,65 @@
+/* ========================================
+   LAYER 7: RESPONSIVE - DESKTOP
+   Desktop Responsive Styles
+   ======================================== */
+
+@media (min-width: 1025px) {
+  /* Large screens optimizations */
+  .container-xl {
+    max-width: var(--container-xl);
+  }
+  
+  .container-2xl {
+    max-width: var(--container-2xl);
+  }
+  
+  /* Grid optimizations */
+  .grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+  
+  /* Cards */
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .card-grid-lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* Navigation */
+  .navbar-nav {
+    gap: var(--space-8);
+  }
+  
+  /* Forms */
+  .form-row-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Quiz */
+  .quiz-container {
+    max-width: 800px;
+  }
+  
+  /* Gamification */
+  .achievements-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .leaderboard-item {
+    padding: var(--space-4);
+  }
+  
+  /* Hover effects for desktop */
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+  }
+}

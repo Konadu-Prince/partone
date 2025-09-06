@@ -1,0 +1,125 @@
+/* ========================================
+   LAYER 8: PRINT - PRINT STYLES
+   Print-specific Styles
+   ======================================== */
+
+@media print {
+  /* Reset colors for print */
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Page setup */
+  @page {
+    margin: 1in;
+  }
+  
+  /* Typography */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    font-family: "Times New Roman", serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    font-weight: bold;
+  }
+  
+  h1 { font-size: 18pt; }
+  h2 { font-size: 16pt; }
+  h3 { font-size: 14pt; }
+  h4 { font-size: 12pt; }
+  
+  /* Links */
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+  }
+  
+  /* Images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Navigation */
+  .navbar,
+  .mobile-menu,
+  .navbar-toggle {
+    display: none !important;
+  }
+  
+  /* Buttons */
+  .btn,
+  .button,
+  button {
+    border: 1px solid black;
+    padding: 2pt 4pt;
+  }
+  
+  /* Forms */
+  .form-input,
+  .form-textarea {
+    border: 1px solid black;
+    padding: 2pt;
+  }
+  
+  /* Cards */
+  .card,
+  .destination-card,
+  .blog-card {
+    border: 1px solid black;
+    page-break-inside: avoid;
+    margin-bottom: 10pt;
+  }
+  
+  /* Quiz elements */
+  .quiz-container {
+    border: 1px solid black;
+    page-break-inside: avoid;
+  }
+  
+  /* Gamification elements */
+  .achievements-container,
+  .badges-container,
+  .leaderboard-container {
+    page-break-inside: avoid;
+  }
+  
+  /* Hide interactive elements */
+  .quiz-actions,
+  .modal-overlay,
+  .notification-container {
+    display: none !important;
+  }
+  
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+  
+  .page-break-after {
+    page-break-after: always;
+  }
+  
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+  
+  /* Margins and spacing */
+  .print-margin-top {
+    margin-top: 20pt;
+  }
+  
+  .print-margin-bottom {
+    margin-bottom: 20pt;
+  }
+}

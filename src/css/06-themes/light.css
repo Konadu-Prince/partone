@@ -1,0 +1,40 @@
+/* ========================================
+   LAYER 6: THEMES - LIGHT THEME
+   Light Theme Styles (Default)
+   ======================================== */
+
+[data-theme="light"] {
+  /* Light theme is the default - no overrides needed */
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--light-50) 100%);
+  color: var(--dark-800);
+}
+
+[data-theme="light"] .card,
+[data-theme="light"] .destination-card,
+[data-theme="light"] .blog-card,
+[data-theme="light"] .testimonial-card {
+  background: white;
+  border: 1px solid var(--light-200);
+  color: var(--dark-800);
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: var(--light-200);
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea {
+  background: white;
+  border-color: var(--light-300);
+  color: var(--dark-800);
+}
+
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] .form-textarea:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}

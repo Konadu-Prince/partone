@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Platform - Wanderlust Travel</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wanderlust Travel Quiz">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Test your travel knowledge with our comprehensive quiz platform. Earn certifications, badges, and compete with other travel enthusiasts.">
+    <meta name="keywords" content="travel quiz, travel knowledge, travel certification, travel education, wanderlust">
+    <meta name="author" content="Wanderlust Travel Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wanderlust Travel Quiz Platform">
+    <meta property="og:description" content="Test your travel knowledge with our comprehensive quiz platform. Earn certifications, badges, and compete with other travel enthusiasts.">
+    <meta property="og:image" content="assets/images/hero-bg.jpg">
+    <meta property="og:url" content="https://konadu-prince.github.io/wanderlust-travel-website/quiz-platform.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wanderlust Travel Quiz Platform">
+    <meta name="twitter:description" content="Test your travel knowledge with our comprehensive quiz platform. Earn certifications, badges, and compete with other travel enthusiasts.">
+    <meta name="twitter:image" content="assets/images/hero-bg.jpg">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        'accent': {
+                            50: '#fffaf0',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="inline-styles.css">
+    <link rel="stylesheet" href="src/css/09-quiz/quiz-engine.css">
+    <link rel="stylesheet" href="src/css/10-gamification/gamification.css">
+</head>
+<body class="font-poppins bg-gradient-to-br from-primary-50 to-accent-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-globe-americas"></i>
+                Wanderlust Travel
+            </a>
+            
+            <div class="navbar-nav">
+                <a href="index.html" class="navbar-link">Home</a>
+                <a href="all-destinations.html" class="navbar-link">Destinations</a>
+                <a href="blog-archive.html" class="navbar-link">Blog</a>
+                <a href="quiz-platform.html" class="navbar-link active">Quiz Platform</a>
+                <a href="login.html" class="navbar-link">Login</a>
+            </div>
+            
+            <div class="navbar-actions">
+                <a href="login.html" class="navbar-button navbar-button-outline">Sign In</a>
+                <a href="register.html" class="navbar-button navbar-button-primary">Sign Up</a>
+            </div>
+            
+            <button class="navbar-toggle">
+                <span class="navbar-toggle-line"></span>
+                <span class="navbar-toggle-line"></span>
+                <span class="navbar-toggle-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-gradient mb-6">
+                🎯 Travel Knowledge Quiz Platform
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Test your travel knowledge, earn certifications, and compete with fellow travel enthusiasts. 
+                Master different categories and become a certified travel expert!
+            </p>
+            
+            <!-- User Stats Display -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="points-display">
+                    <span class="points-icon">⭐</span>
+                    <span class="points-value" id="user-points">0</span>
+                </div>
+                <div class="level-display">
+                    <div class="level-icon" id="user-level-icon">1</div>
+                    <div class="level-info">
+                        <div class="level-number" id="user-level">Level 1</div>
+                        <div class="level-title">Bronze Explorer</div>
+                        <div class="level-progress">
+                            <div class="level-progress-bar">
+                                <div class="level-progress-fill" id="level-progress" style="width: 0%"></div>
+                            </div>
+                            <div class="level-progress-text" id="level-progress-text">0 / 100 points</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="streak-display">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-value" id="user-streak">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question Feeding System -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">🍽️ Smart Question Feeding</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card destination-card cursor-pointer" onclick="quizPlatform.feedDailyQuestions()">
+                    <div class="destination-card-content">
+                        <div class="destination-card-title flex items-center gap-3">
+                            <span class="text-3xl">📅</span>
+                            Daily Questions
+                        </div>
+                        <div class="destination-card-description">
+                            Personalized daily learning routine with streak bonuses
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card destination-card cursor-pointer" onclick="quizPlatform.feedAdaptiveQuestions()">
+                    <div class="destination-card-content">
+                        <div class="destination-card-title flex items-center gap-3">
+                            <span class="text-3xl">🧠</span>
+                            Adaptive Learning
+                        </div>
+                        <div class="destination-card-description">
+                            Questions that adapt to your performance and skill level
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card destination-card cursor-pointer" onclick="quizPlatform.feedPracticeQuestions()">
+                    <div class="destination-card-content">
+                        <div class="destination-card-title flex items-center gap-3">
+                            <span class="text-3xl">🎯</span>
+                            Practice Mode
+                        </div>
+                        <div class="destination-card-description">
+                            Targeted practice for your weak areas and improvement
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card destination-card cursor-pointer" onclick="quizPlatform.feedChallengeQuestions()">
+                    <div class="destination-card-content">
+                        <div class="destination-card-title flex items-center gap-3">
+                            <span class="text-3xl">🏆</span>
+                            Challenge Mode
+                        </div>
+                        <div class="destination-card-description">
+                            Advanced questions for expert users and competitions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Categories -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Choose Your Challenge</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="quiz-categories">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Quiz Interface -->
+        <section id="quiz-section" class="hidden">
+            <div class="quiz-container" id="quiz-container">
+                <!-- Quiz content will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="mb-12" id="achievements-section">
+            <h2 class="text-3xl font-bold text-center mb-8">Your Achievements</h2>
+            <div class="achievements-container" id="achievements-container">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Badges Section -->
+        <section class="mb-12" id="badges-section">
+            <h2 class="text-3xl font-bold text-center mb-8">Your Badges</h2>
+            <div class="badges-container" id="badges-container">
+                <!-- Badges will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section class="mb-12" id="leaderboard-section">
+            <h2 class="text-3xl font-bold text-center mb-8">Global Leaderboard</h2>
+            <div class="leaderboard-container">
+                <div class="leaderboard-header">
+                    <h3 class="leaderboard-title">Top Travel Experts</h3>
+                    <p class="leaderboard-subtitle">Compete with travelers worldwide</p>
+                </div>
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <!-- Leaderboard will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container">
+        <!-- Notifications will be added here -->
+    </div>
+
+    <!-- Scripts -->
+    <!-- Foundation Layer - Core Components -->
+    <script src="src/quiz/core/PerformanceOptimizer.js"></script>
+    <script src="src/quiz/core/ErrorHandler.js"></script>
+    <script src="src/quiz/core/RateLimiter.js"></script>
+    
+    <!-- Data Layer -->
+    <script src="src/quiz/data/categories/travel-categories.js"></script>
+    <script src="src/quiz/data/questions/sample-questions.js"></script>
+    
+    <!-- Component Layer -->
+    <script src="src/quiz/components/QuizEngine.js"></script>
+    <script src="src/quiz/components/QuestionDelivery.js"></script>
+    <script src="src/quiz/components/PerformanceDashboard.js"></script>
+    
+    <!-- Feature Layer -->
+    <script src="src/quiz/modules/GamificationModule.js"></script>
+    <script src="src/quiz/modules/QuestionFeeder.js"></script>
+    
+    <!-- Integration Layer -->
+    <script src="src/quiz/utils/QuestionAPI.js"></script>
+    
+    <!-- Application Layer -->
+    <script src="src/js/core/App.js"></script>
+    
+    <script>
+        // Initialize Quiz Platform
+        class QuizPlatform {
+            constructor() {
+                this.quizEngine = null;
+                this.gamification = null;
+                this.questionFeeder = null;
+                this.questionAPI = null;
+                this.questionDelivery = null;
+                this.currentQuiz = null;
+                this.userStats = {
+                    points: 0,
+                    level: 1,
+                    streak: 0,
+                    achievements: [],
+                    badges: []
+                };
+                
+                this.init();
+            }
+            
+            async init() {
+                console.log('🎯 Initializing Quiz Platform...');
+                
+                // Initialize question feeding system
+                this.questionFeeder = new QuestionFeeder();
+                this.questionAPI = new QuestionAPI();
+                this.questionDelivery = new QuestionDelivery();
+                
+                // Initialize performance monitoring
+                this.performanceDashboard = new PerformanceDashboard();
+                
+                // Initialize gamification module
+                this.gamification = new GamificationModule(window.app);
+                await this.gamification.init();
+                
+                // Initialize quiz engine
+                this.quizEngine = new QuizEngine({
+                    showExplanation: true,
+                    allowSkip: true,
+                    adaptiveDifficulty: true
+                });
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Load and display content
+                this.loadCategories();
+                this.loadUserStats();
+                this.loadAchievements();
+                this.loadBadges();
+                this.loadLeaderboard();
+                
+                console.log('✅ Quiz Platform initialized with Question Feeding System');
+            }
+            
+            setupEventListeners() {
+                // Quiz engine events
+                this.quizEngine.addEventListener('quiz:started', (data) => {
+                    this.showQuizSection();
+                    this.hideOtherSections();
+                });
+                
+                // Performance dashboard keyboard shortcut (Ctrl+Shift+P)
+                document.addEventListener('keydown', (event) => {
+                    if (event.ctrlKey && event.shiftKey && event.key === 'P') {
+                        event.preventDefault();
+                        this.performanceDashboard.toggle();
+                    }
+                });
+                
+                this.quizEngine.addEventListener('quiz:finished', (data) => {
+                    this.showQuizResults(data);
+                    this.gamification.handleQuizCompletion(data);
+                });
+                
+                this.quizEngine.addEventListener('question:render', (data) => {
+                    this.renderQuestion(data);
+                });
+                
+                // Gamification events
+                this.gamification.addEventListener('points:awarded', (data) => {
+                    this.updateUserStats();
+                    this.showNotification('Points Awarded!', `+${data.pointsEarned} points`, 'points');
+                });
+                
+                this.gamification.addEventListener('achievement:earned', (data) => {
+                    this.loadAchievements();
+                    this.showNotification('Achievement Unlocked!', data.achievement.name, 'achievement');
+                });
+                
+                this.gamification.addEventListener('badge:earned', (data) => {
+                    this.loadBadges();
+                    this.showNotification('New Badge!', data.badge.name, 'badge');
+                });
+                
+                this.gamification.addEventListener('level:up', (data) => {
+                    this.updateUserStats();
+                    this.showNotification('Level Up!', `You're now level ${data.newLevel}!`, 'level-up');
+                });
+            }
+            
+            loadCategories() {
+                const container = document.getElementById('quiz-categories');
+                container.innerHTML = '';
+                
+                Object.values(TravelCategories).forEach(category => {
+                    const categoryCard = document.createElement('div');
+                    categoryCard.className = 'card destination-card cursor-pointer';
+                    categoryCard.innerHTML = `
+                        <div class="destination-card-content">
+                            <div class="destination-card-title flex items-center gap-3">
+                                <span class="text-3xl">${category.icon}</span>
+                                ${category.name}
+                            </div>
+                            <div class="destination-card-description">
+                                ${category.description}
+                            </div>
+                            <div class="destination-card-rating">
+                                <span class="text-sm text-gray-600">${category.totalQuestions} questions</span>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button class="btn btn-primary btn-sm" onclick="quizPlatform.startCategoryQuiz('${category.id}')">
+                                    Start Quiz
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="quizPlatform.showCategoryDetails('${category.id}')">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(categoryCard);
+                });
+            }
+            
+            startCategoryQuiz(categoryId) {
+                const category = TravelCategories[categoryId];
+                if (!category) return;
+                
+                // Create quiz from sample questions
+                const questions = this.getQuestionsForCategory(categoryId);
+                if (questions.length === 0) {
+                    this.showNotification('No Questions Available', 'This category is coming soon!', 'info');
+                    return;
+                }
+                
+                this.currentQuiz = {
+                    id: `quiz-${categoryId}-${Date.now()}`,
+                    title: category.name,
+                    category: categoryId,
+                    difficulty: 'beginner',
+                    questions: questions.slice(0, 5), // Limit to 5 questions for demo
+                    timeLimit: 30
+                };
+                
+                this.quizEngine.startQuiz(this.currentQuiz);
+            }
+            
+            getQuestionsForCategory(categoryId) {
+                const questions = [];
+                
+                // Get questions from sample data
+                if (SampleQuestions[categoryId]) {
+                    Object.values(SampleQuestions[categoryId]).forEach(subcategoryQuestions => {
+                        questions.push(...subcategoryQuestions);
+                    });
+                }
+                
+                return questions;
+            }
+            
+            renderQuestion(data) {
+                const container = document.getElementById('quiz-container');
+                const { question, type, options } = data;
+                
+                container.innerHTML = `
+                    <div class="quiz-header">
+                        <h1 class="quiz-title">${this.currentQuiz.title}</h1>
+                        <div class="quiz-meta">
+                            <div class="quiz-category">
+                                <span>${TravelCategories[this.currentQuiz.category]?.icon}</span>
+                                ${TravelCategories[this.currentQuiz.category]?.name}
+                            </div>
+                            <div class="quiz-difficulty ${this.currentQuiz.difficulty}">
+                                ${this.currentQuiz.difficulty}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${((this.quizEngine.currentQuestionIndex + 1) / this.currentQuiz.questions.length) * 100}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Question ${this.quizEngine.currentQuestionIndex + 1} of ${this.currentQuiz.questions.length}</span>
+                            <span>${Math.round(((this.quizEngine.currentQuestionIndex + 1) / this.currentQuiz.questions.length) * 100)}% Complete</span>
+                        </div>
+                    </div>
+                    
+                    <div class="question-container">
+                        <div class="question-header">
+                            <span class="question-number">Question ${this.quizEngine.currentQuestionIndex + 1}</span>
+                            <div class="question-timer" id="question-timer">
+                                <i class="fas fa-clock"></i>
+                                <span id="timer-value">30</span>s
+                            </div>
+                        </div>
+                        
+                        <div class="question-text">${question.question}</div>
+                        
+                        <div class="answer-options" id="answer-options">
+                            ${this.renderAnswerOptions(type, options, question)}
+                        </div>
+                        
+                        <div class="quiz-actions">
+                            <button class="quiz-button quiz-button-skip" onclick="quizPlatform.quizEngine.skipQuestion()">
+                                <i class="fas fa-forward"></i>
+                                Skip Question
+                            </button>
+                            <button class="quiz-button quiz-button-primary" id="submit-answer" disabled>
+                                <i class="fas fa-check"></i>
+                                Submit Answer
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                this.setupQuestionInteractions();
+            }
+            
+            renderAnswerOptions(type, options, question) {
+                switch (type) {
+                    case 'multiple-choice':
+                        return options.map((option, index) => `
+                            <div class="answer-option" data-answer="${index}">
+                                <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                                <div class="option-text">${option}</div>
+                            </div>
+                        `).join('');
+                        
+                    case 'true-false':
+                        return `
+                            <div class="true-false-options">
+                                <div class="true-false-option" data-answer="true">
+                                    <i class="fas fa-check"></i>
+                                    True
+                                </div>
+                                <div class="true-false-option" data-answer="false">
+                                    <i class="fas fa-times"></i>
+                                    False
+                                </div>
+                            </div>
+                        `;
+                        
+                    case 'fill-in-blank':
+                        return `
+                            <div class="fill-blank-container">
+                                <input type="text" class="fill-blank-input" id="fill-answer" placeholder="Type your answer here...">
+                            </div>
+                        `;
+                        
+                    default:
+                        return '<p>Question type not supported</p>';
+                }
+            }
+            
+            setupQuestionInteractions() {
+                // Multiple choice and true/false options
+                document.querySelectorAll('.answer-option, .true-false-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        // Remove previous selection
+                        document.querySelectorAll('.answer-option, .true-false-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Select current option
+                        option.classList.add('selected');
+                        
+                        // Enable submit button
+                        document.getElementById('submit-answer').disabled = false;
+                    });
+                });
+                
+                // Fill in the blank
+                const fillInput = document.getElementById('fill-answer');
+                if (fillInput) {
+                    fillInput.addEventListener('input', () => {
+                        document.getElementById('submit-answer').disabled = !fillInput.value.trim();
+                    });
+                    
+                    fillInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter' && fillInput.value.trim()) {
+                            this.submitAnswer();
+                        }
+                    });
+                }
+                
+                // Submit button
+                document.getElementById('submit-answer').addEventListener('click', () => {
+                    this.submitAnswer();
+                });
+            }
+            
+            submitAnswer() {
+                let answer = null;
+                
+                // Get selected answer
+                const selectedOption = document.querySelector('.answer-option.selected, .true-false-option.selected');
+                if (selectedOption) {
+                    answer = selectedOption.dataset.answer;
+                }
+                
+                const fillInput = document.getElementById('fill-answer');
+                if (fillInput && fillInput.value.trim()) {
+                    answer = fillInput.value.trim();
+                }
+                
+                if (answer !== null) {
+                    this.quizEngine.submitAnswer(answer);
+                }
+            }
+            
+            showQuizResults(results) {
+                const container = document.getElementById('quiz-container');
+                container.innerHTML = `
+                    <div class="quiz-results">
+                        <div class="results-score">${results.score}</div>
+                        <div class="results-percentage">${results.percentage}%</div>
+                        
+                        <div class="results-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${results.userAnswers.filter(a => a.isCorrect).length}</div>
+                                <div class="stat-label">Correct Answers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${results.maxStreak}</div>
+                                <div class="stat-label">Best Streak</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${Math.round(results.totalTime / 1000)}s</div>
+                                <div class="stat-label">Total Time</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-actions">
+                            <button class="quiz-button quiz-button-primary" onclick="quizPlatform.startCategoryQuiz('${this.currentQuiz.category}')">
+                                <i class="fas fa-redo"></i>
+                                Try Again
+                            </button>
+                            <button class="quiz-button quiz-button-secondary" onclick="quizPlatform.hideQuizSection()">
+                                <i class="fas fa-home"></i>
+                                Back to Categories
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            showQuizSection() {
+                document.getElementById('quiz-section').classList.remove('hidden');
+                document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            hideQuizSection() {
+                document.getElementById('quiz-section').classList.add('hidden');
+            }
+            
+            hideOtherSections() {
+                document.getElementById('achievements-section').classList.add('hidden');
+                document.getElementById('badges-section').classList.add('hidden');
+                document.getElementById('leaderboard-section').classList.add('hidden');
+            }
+            
+            loadUserStats() {
+                // Update user stats display
+                document.getElementById('user-points').textContent = this.gamification.points;
+                document.getElementById('user-level').textContent = `Level ${this.gamification.level}`;
+                document.getElementById('user-level-icon').textContent = this.gamification.level;
+                document.getElementById('user-streak').textContent = this.gamification.streak;
+                
+                // Update level progress
+                const currentLevelPoints = (this.gamification.level - 1) * 100;
+                const nextLevelPoints = this.gamification.level * 100;
+                const progress = ((this.gamification.points - currentLevelPoints) / 100) * 100;
+                
+                document.getElementById('level-progress').style.width = `${progress}%`;
+                document.getElementById('level-progress-text').textContent = 
+                    `${this.gamification.points - currentLevelPoints} / 100 points`;
+            }
+            
+            loadAchievements() {
+                const container = document.getElementById('achievements-container');
+                container.innerHTML = '';
+                
+                Object.values(this.gamification.achievementDefinitions).forEach(achievement => {
+                    const earned = this.gamification.achievements.includes(achievement.id);
+                    const card = document.createElement('div');
+                    card.className = `achievement-card ${earned ? 'earned' : ''}`;
+                    card.innerHTML = `
+                        <div class="achievement-icon">${achievement.icon}</div>
+                        <div class="achievement-name">${achievement.name}</div>
+                        <div class="achievement-description">${achievement.description}</div>
+                        <div class="achievement-points">
+                            <i class="fas fa-star"></i>
+                            ${achievement.points} points
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+            
+            loadBadges() {
+                const container = document.getElementById('badges-container');
+                container.innerHTML = '';
+                
+                Object.values(this.gamification.badgeDefinitions).forEach(badge => {
+                    const earned = this.gamification.badges.includes(badge.id);
+                    const badgeElement = document.createElement('div');
+                    badgeElement.className = `badge ${earned ? 'earned' : ''}`;
+                    badgeElement.innerHTML = `
+                        <div class="badge-icon">${badge.icon}</div>
+                        <div class="badge-name">${badge.name}</div>
+                        <div class="badge-description">${badge.description}</div>
+                    `;
+                    container.appendChild(badgeElement);
+                });
+            }
+            
+            loadLeaderboard() {
+                const container = document.getElementById('leaderboard-list');
+                container.innerHTML = '';
+                
+                this.gamification.leaderboard.slice(0, 10).forEach((user, index) => {
+                    const item = document.createElement('div');
+                    item.className = `leaderboard-item ${user.userId === 'anonymous' ? 'current-user' : ''}`;
+                    item.innerHTML = `
+                        <div class="leaderboard-rank ${index < 3 ? `rank-${index + 1}` : 'other'}">
+                            ${index + 1}
+                        </div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-avatar">
+                                ${user.username.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-username">${user.username}</div>
+                                <div class="leaderboard-level">Level ${user.level}</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-stats">
+                            <div class="leaderboard-points">${user.points}</div>
+                            <div class="leaderboard-badges">
+                                ${Array(user.badges).fill(0).map(() => '<div class="leaderboard-badge">🏆</div>').join('')}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+            
+            showNotification(title, message, type = 'info') {
+                const container = document.getElementById('notification-container');
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="notification-header">
+                        <div class="notification-icon">
+                            ${type === 'achievement' ? '🏆' : 
+                              type === 'badge' ? '🎖️' : 
+                              type === 'level-up' ? '⬆️' : 
+                              type === 'points' ? '⭐' : 'ℹ️'}
+                        </div>
+                        <div class="notification-title">${title}</div>
+                    </div>
+                    <div class="notification-message">${message}</div>
+                `;
+                
+                container.appendChild(notification);
+                
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+            }
+
+            // Question Feeding Methods
+            async feedDailyQuestions() {
+                try {
+                    this.showNotification('Loading Daily Questions', 'Preparing your personalized daily learning routine...', 'info');
+                    
+                    const questions = await this.questionAPI.getDailyQuestions('user123');
+                    
+                    if (questions.length > 0) {
+                        this.currentQuiz = {
+                            id: 'daily-quiz',
+                            title: 'Daily Questions',
+                            category: 'daily',
+                            difficulty: 'mixed',
+                            questions: questions,
+                            timeLimit: 30
+                        };
+                        
+                        this.quizEngine.startQuiz(this.currentQuiz);
+                        this.showNotification('Daily Questions Ready!', `You have ${questions.length} questions to complete today`, 'success');
+                    } else {
+                        this.showNotification('No Daily Questions', 'You have completed all available daily questions!', 'info');
+                    }
+                } catch (error) {
+                    console.error('Error feeding daily questions:', error);
+                    this.showNotification('Error', 'Failed to load daily questions. Please try again.', 'error');
+                }
+            }
+
+            async feedAdaptiveQuestions() {
+                try {
+                    this.showNotification('Loading Adaptive Questions', 'Analyzing your performance to select the best questions...', 'info');
+                    
+                    const questions = await this.questionAPI.getQuestions('user123', {
+                        count: 10,
+                        adaptive: true,
+                        personalized: true
+                    });
+                    
+                    if (questions.length > 0) {
+                        this.currentQuiz = {
+                            id: 'adaptive-quiz',
+                            title: 'Adaptive Learning',
+                            category: 'adaptive',
+                            difficulty: 'adaptive',
+                            questions: questions,
+                            timeLimit: 30
+                        };
+                        
+                        this.quizEngine.startQuiz(this.currentQuiz);
+                        this.showNotification('Adaptive Questions Ready!', 'Questions have been personalized based on your learning profile', 'success');
+                    } else {
+                        this.showNotification('No Questions Available', 'Unable to find suitable questions. Please try again.', 'info');
+                    }
+                } catch (error) {
+                    console.error('Error feeding adaptive questions:', error);
+                    this.showNotification('Error', 'Failed to load adaptive questions. Please try again.', 'error');
+                }
+            }
+
+            async feedPracticeQuestions() {
+                try {
+                    this.showNotification('Loading Practice Questions', 'Identifying your weak areas for targeted practice...', 'info');
+                    
+                    const weakAreas = this.questionAPI.getUserWeakAreas('user123');
+                    const questions = await this.questionAPI.getPracticeQuestions('user123', weakAreas);
+                    
+                    if (questions.length > 0) {
+                        this.currentQuiz = {
+                            id: 'practice-quiz',
+                            title: 'Practice Mode',
+                            category: 'practice',
+                            difficulty: 'mixed',
+                            questions: questions,
+                            timeLimit: 30
+                        };
+                        
+                        this.quizEngine.startQuiz(this.currentQuiz);
+                        this.showNotification('Practice Questions Ready!', `Focus on improving ${weakAreas.length} areas where you need practice`, 'success');
+                    } else {
+                        this.showNotification('No Practice Areas', 'Great job! No weak areas identified for practice.', 'success');
+                    }
+                } catch (error) {
+                    console.error('Error feeding practice questions:', error);
+                    this.showNotification('Error', 'Failed to load practice questions. Please try again.', 'error');
+                }
+            }
+
+            async feedChallengeQuestions() {
+                try {
+                    this.showNotification('Loading Challenge Questions', 'Preparing advanced questions for expert users...', 'info');
+                    
+                    const questions = await this.questionAPI.getChallengeQuestions('user123');
+                    
+                    if (questions.length > 0) {
+                        this.currentQuiz = {
+                            id: 'challenge-quiz',
+                            title: 'Challenge Mode',
+                            category: 'challenge',
+                            difficulty: 'advanced',
+                            questions: questions,
+                            timeLimit: 20
+                        };
+                        
+                        this.quizEngine.startQuiz(this.currentQuiz);
+                        this.showNotification('Challenge Questions Ready!', 'Advanced questions to test your expertise', 'success');
+                    } else {
+                        this.showNotification('Not Ready for Challenges', 'Complete more quizzes to unlock challenge mode', 'info');
+                    }
+                } catch (error) {
+                    console.error('Error feeding challenge questions:', error);
+                    this.showNotification('Error', 'Failed to load challenge questions. Please try again.', 'error');
+                }
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.quizPlatform = new QuizPlatform();
+        });
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+/* ========================================
+   LAYER 7: RESPONSIVE - MOBILE
+   Mobile Responsive Styles
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* Typography */
+  .text-4xl { font-size: var(--font-size-3xl); }
+  .text-5xl { font-size: var(--font-size-4xl); }
+  .text-6xl { font-size: var(--font-size-5xl); }
+  
+  /* Spacing */
+  .p-8 { padding: var(--space-6); }
+  .p-12 { padding: var(--space-8); }
+  .p-16 { padding: var(--space-12); }
+  .p-20 { padding: var(--space-16); }
+  .p-24 { padding: var(--space-20); }
+  
+  .m-8 { margin: var(--space-6); }
+  .m-12 { margin: var(--space-8); }
+  .m-16 { margin: var(--space-12); }
+  .m-20 { margin: var(--space-16); }
+  .m-24 { margin: var(--space-20); }
+  
+  /* Grid */
+  .grid-cols-2 { grid-template-columns: 1fr; }
+  .grid-cols-3 { grid-template-columns: 1fr; }
+  .grid-cols-4 { grid-template-columns: 1fr; }
+  .grid-cols-5 { grid-template-columns: 1fr; }
+  .grid-cols-6 { grid-template-columns: 1fr; }
+  
+  /* Flex */
+  .flex-row { flex-direction: column; }
+  .flex-col { flex-direction: column; }
+  
+  /* Navigation */
+  .navbar-nav {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  /* Cards */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .card-grid-sm {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-grid-lg {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Forms */
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-group-inline {
+    flex-direction: column;
+  }
+  
+  /* Buttons */
+  .btn-group {
+    flex-direction: column;
+  }
+  
+  /* Modals */
+  .modal {
+    width: 95vw;
+    margin: var(--space-4);
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: var(--space-4);
+  }
+  
+  /* Quiz */
+  .quiz-container {
+    margin: var(--space-4);
+    padding: var(--space-4);
+  }
+  
+  .answer-options {
+    gap: var(--space-2);
+  }
+  
+  .answer-option {
+    padding: var(--space-3);
+  }
+  
+  /* Gamification */
+  .achievements-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .badges-container {
+    justify-content: center;
+  }
+  
+  .leaderboard-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,49 @@
+/* ========================================
+   LAYER 7: RESPONSIVE - TABLET
+   Tablet Responsive Styles
+   ======================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Typography */
+  .text-5xl { font-size: var(--font-size-4xl); }
+  .text-6xl { font-size: var(--font-size-5xl); }
+  
+  /* Grid */
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-5 { grid-template-columns: repeat(3, 1fr); }
+  .grid-cols-6 { grid-template-columns: repeat(3, 1fr); }
+  
+  /* Cards */
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  
+  .card-grid-lg {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Navigation */
+  .navbar-nav {
+    gap: var(--space-4);
+  }
+  
+  /* Forms */
+  .form-row-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Quiz */
+  .quiz-container {
+    max-width: 700px;
+  }
+  
+  /* Gamification */
+  .achievements-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .leaderboard-item {
+    padding: var(--space-3);
+  }
+}

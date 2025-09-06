@@ -1,0 +1,72 @@
+/* ========================================
+   LAYER 6: THEMES - DARK THEME
+   Dark Theme Styles
+   ======================================== */
+
+[data-theme="dark"] {
+  /* Dark theme color overrides */
+  --primary-50: #0c4a6e;
+  --primary-100: #075985;
+  --primary-200: #0369a1;
+  --primary-300: #0284c7;
+  --primary-400: #0ea5e9;
+  --primary-500: #38bdf8;
+  --primary-600: #7dd3fc;
+  --primary-700: #bae6fd;
+  --primary-800: #e0f2fe;
+  --primary-900: #f0f9ff;
+  
+  --dark-50: #2c3e50;
+  --dark-100: #1e293b;
+  --dark-200: #334155;
+  --dark-300: #475569;
+  --dark-400: #64748b;
+  --dark-500: #94a3b8;
+  --dark-600: #cbd5e1;
+  --dark-700: #e2e8f0;
+  --dark-800: #f1f5f9;
+  --dark-900: #f8fafc;
+  
+  --light-50: #27272a;
+  --light-100: #3f3f46;
+  --light-200: #52525b;
+  --light-300: #71717a;
+  --light-400: #a1a1aa;
+  --light-500: #d4d4d8;
+  --light-600: #e4e4e7;
+  --light-700: #f4f4f5;
+  --light-800: #fafafa;
+  --light-900: #ffffff;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, var(--dark-100) 0%, var(--dark-200) 100%);
+  color: var(--light-100);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .destination-card,
+[data-theme="dark"] .blog-card,
+[data-theme="dark"] .testimonial-card {
+  background: var(--dark-200);
+  border: 1px solid var(--dark-300);
+  color: var(--light-100);
+}
+
+[data-theme="dark"] .navbar {
+  background: rgba(30, 41, 59, 0.95);
+  border-bottom-color: var(--dark-300);
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea {
+  background: var(--dark-200);
+  border-color: var(--dark-300);
+  color: var(--light-100);
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-textarea:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}

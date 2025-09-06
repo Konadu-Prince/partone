@@ -94,8 +94,23 @@ class WanderlustBuilder {
     async buildCSS() {
         console.log('🎨 Building CSS...');
         
+        // Check if main CSS file exists
+        const mainCSSPath = path.join(this.srcDir, 'css/main.css');
+        if (!fs.existsSync(mainCSSPath)) {
+            console.log('⚠️  Main CSS file not found, using inline-styles.css');
+            // Copy inline-styles.css if it exists
+            const inlineCSSPath = './inline-styles.css';
+            if (fs.existsSync(inlineCSSPath)) {
+                const inlineCSS = fs.readFileSync(inlineCSSPath, 'utf8');
+                const finalCSS = this.config.minify ? this.minifyCSS(inlineCSS) : inlineCSS;
+                fs.writeFileSync(path.join(this.distDir, 'css/wanderlust-styles.css'), finalCSS);
+                console.log('✅ CSS built from inline-styles.css');
+                return;
+            }
+        }
+        
         // Read main CSS file
-        const mainCSS = fs.readFileSync(path.join(this.srcDir, 'css/main.css'), 'utf8');
+        const mainCSS = fs.readFileSync(mainCSSPath, 'utf8');
         
         // Process imports
         const processedCSS = await this.processCSSImports(mainCSS);
@@ -139,8 +154,23 @@ class WanderlustBuilder {
     async buildJS() {
         console.log('⚡ Building JavaScript...');
         
+        // Check if main JS file exists
+        const mainJSPath = path.join(this.srcDir, 'js/main.js');
+        if (!fs.existsSync(mainJSPath)) {
+            console.log('⚠️  Main JS file not found, using wanderlust-app.js');
+            // Copy wanderlust-app.js if it exists
+            const appJSPath = './wanderlust-app.js';
+            if (fs.existsSync(appJSPath)) {
+                const appJS = fs.readFileSync(appJSPath, 'utf8');
+                const finalJS = this.config.minify ? this.minifyJS(appJS) : appJS;
+                fs.writeFileSync(path.join(this.distDir, 'js/wanderlust-app.js'), finalJS);
+                console.log('✅ JavaScript built from wanderlust-app.js');
+                return;
+            }
+        }
+        
         // Read main JS file
-        const mainJS = fs.readFileSync(path.join(this.srcDir, 'js/main.js'), 'utf8');
+        const mainJS = fs.readFileSync(mainJSPath, 'utf8');
         
         // Process imports
         const processedJS = await this.processJSImports(mainJS);
@@ -198,6 +228,15 @@ class WanderlustBuilder {
             }
         });
         
+        // Copy PWA files
+        const pwaFiles = ['manifest.json', 'sw.js'];
+        pwaFiles.forEach(file => {
+            if (fs.existsSync(file)) {
+                fs.copyFileSync(file, path.join(this.distDir, file));
+                console.log(`📱 Copied PWA file: ${file}`);
+            }
+        });
+        
         console.log('✅ Assets copied');
     }
 
@@ -213,15 +252,77 @@ class WanderlustBuilder {
             const content = fs.readFileSync(file, 'utf8');
             
             // Update asset paths for dist
-            const updatedContent = content
+            let updatedContent = content
                 .replace(/wanderlust-styles\.css/g, 'css/wanderlust-styles.css')
                 .replace(/wanderlust-app\.js/g, 'js/wanderlust-app.js')
                 .replace(/travel-assets\//g, 'assets/images/');
             
+            // Add PWA meta tags if not present
+            if (!updatedContent.includes('manifest.json')) {
+                updatedContent = updatedContent.replace(
+                    '<head>',
+                    `<head>
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wanderlust Travel">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover amazing travel destinations with Wanderlust Travel. Book your dream vacation with our modern travel platform.">
+    <meta name="keywords" content="travel, tourism, vacation, destinations, booking, wanderlust">
+    <meta name="author" content="Wanderlust Travel Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wanderlust Travel - Book Your Dream Vacation">
+    <meta property="og:description" content="Discover amazing travel destinations with Wanderlust Travel. Book your dream vacation with our modern travel platform.">
+    <meta property="og:image" content="assets/images/hero-bg.jpg">
+    <meta property="og:url" content="https://konadu-prince.github.io/wanderlust-travel-website">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wanderlust Travel - Book Your Dream Vacation">
+    <meta name="twitter:description" content="Discover amazing travel destinations with Wanderlust Travel. Book your dream vacation with our modern travel platform.">
+    <meta name="twitter:image" content="assets/images/hero-bg.jpg">`
+                );
+            }
+            
+            // Add service worker registration
+            if (!updatedContent.includes('sw.js')) {
+                updatedContent = updatedContent.replace(
+                    '</body>',
+                    `    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>`
+                );
+            }
+            
+            // Minify HTML in production
+            if (this.config.minify) {
+                updatedContent = this.minifyHTML(updatedContent);
+            }
+            
             fs.writeFileSync(path.join(this.distDir, file), updatedContent);
         });
         
-        console.log('✅ HTML files copied');
+        console.log('✅ HTML files copied and enhanced');
     }
 
     /**
@@ -266,6 +367,17 @@ class WanderlustBuilder {
             .replace(/\/\/.*$/gm, '') // Remove line comments
             .replace(/\s+/g, ' ') // Collapse whitespace
             .replace(/;\s*}/g, '}') // Remove semicolons before closing braces
+            .trim();
+    }
+
+    /**
+     * Simple HTML minification
+     */
+    minifyHTML(html) {
+        return html
+            .replace(/<!--[\s\S]*?-->/g, '') // Remove HTML comments
+            .replace(/\s+/g, ' ') // Collapse whitespace
+            .replace(/>\s+</g, '><') // Remove whitespace between tags
             .trim();
     }
 
